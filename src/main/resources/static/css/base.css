@@ -1,0 +1,56 @@
+#unseen {
+  margin: 0 auto;
+  text-align: center;
+  align-self: center;
+}
+#unseen form {
+  padding-bottom: 15px;
+  align-self: center;
+  margin: 0 auto;
+  padding-top: 15px;
+}
+
+#unseen form input {
+  margin: 0 auto;
+
+}
+#tabletop {
+  padding-bottom: 10px;
+}
+body input {
+  text-align: center;
+}
+table {
+  width:100%;
+}
+#productTable {
+  padding-top: 10px;
+}
+#productTable, th, td {
+  border: 1px solid slategray;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+table#productTable tr:nth-child(even) {
+  background-color: #eee;
+}
+table#productTable tr:nth-child(odd) {
+  background-color:#fff;
+}
+
+table#productTable th	{
+  background-color: #ffd777;
+  text-align: center;
+  color: #5d6069;
+}
+
+#productCategoryRow, th {
+  text-align: center;
+  width: 100px;
+  row-span: 100;
+}
