@@ -35,21 +35,26 @@ public class PromotionController {
     @RequestMapping("promotion/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
         model.addAttribute("promotion", promoService.getPromoById(id));
-        return "promoform";
+        return "blank";
     }
 
     @RequestMapping("promotion/new")
-    public String newProduct(Model model){
+    public String newPromotion(Model model){
         model.addAttribute("promotion", new Promotion());
-        return "promoform";
+        return "blank";
     }
 
     @RequestMapping(value = "promotion", method = RequestMethod.POST)
-    public String saveProduct(Promotion promotion){
+    public String savePromotion(Promotion promotion){
 
         promoService.savePromo(promotion);
 
         return "redirect:/promotion/" + promotion.getId();
+    }
+
+    @RequestMapping(value = "*")
+    public String noValue(){
+        return "errorPage";
     }
 
 }
