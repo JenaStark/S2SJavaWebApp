@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Spring Framework Guru</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div th:if="${not #lists.isEmpty(campaign.promoIDs)}">
+        <h2>Campaign Details #</h2>
+        <h2 th:text="${campaign.id}"></h2>
+        <h2>Associated Promotions</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>View</th>
+                <th>Edit</th>
+            </tr>
+            <tr th:each="promotion : ${promotions}">
+                <td th:text="${promotion.id}"><a href="/promotion/${promotion.id}">Id</a></td>
+                <td th:text="${promotion.name}">Name</td>
+
+                <td th:text="${promotion.description}">description</td>
+
+                <td><a th:href="${ '/promotion/' + promotion.id}">View</a></td>
+                <td><a th:href="${'/promotion/edit/' + promotion.id}">Edit</a></td>
+            </tr>
+        </table>
+
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -2,6 +2,7 @@ package guru.springframework.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 @Entity
 public class Campaign {
@@ -14,7 +15,7 @@ public class Campaign {
 
     private String name;
     private String description;
-    private Integer[] promoIDs;
+    private ArrayList<Integer> promoIDs;
 
     public String getDescription() {
         return description;
@@ -48,11 +49,11 @@ public class Campaign {
         this.name = name;
     }
 
-    public Integer[] getPromoIDs() {
+    public ArrayList<Integer> getPromoIDs() {
         return promoIDs;
     }
 
-    public void setPromoIDs(Integer[] promoIDs) {
+    public void setPromoIDs(ArrayList<Integer> promoIDs) {
         this.promoIDs = promoIDs;
     }
 }
