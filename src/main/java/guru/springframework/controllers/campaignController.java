@@ -2,6 +2,8 @@ package guru.springframework.controllers;
 
 import guru.springframework.domain.Campaign;
 import guru.springframework.services.CampaignService;
+import guru.springframework.domain.Promotion;
+import guru.springframework.services.PromoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,18 +11,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Created by Michael on 6/16/16.
- */
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class CampaignController {
+
     private CampaignService campaignService;
+    private PromoService promoService;
+
 
     @Autowired
     public void setCampaignService(CampaignService campaignService) {
         this.campaignService = campaignService;
     }
+
+    @Autowired
+    public void setPromoService(PromoService promoService) {
+        this.promoService = promoService;
+    }
+
 
     @RequestMapping(value = "/campaigns", method = RequestMethod.GET)
     public String list(Model model){
@@ -29,37 +39,40 @@ public class CampaignController {
         return "campaigns";
     }
 
-    //Views Campaign
     @RequestMapping("campaign/{id}")
-    public String showProduct(@PathVariable Integer id, Model model){
+    public String showCampaign(@PathVariable Integer id, Model model){
         model.addAttribute("campaign", campaignService.getCampaignById(id));
+        List<Promotion> promotions = new ArrayList<Promotion>();
+        for (Integer idnum: campaignService.getCampaignById(id).getPromoIDs()) {
+            promotions.addAll(promoService.findById(idnum));
+        }
+        model.addAttribute("promotions", promotions);
         return "campaignshow";
     }
 
-    //Opens Campaign Edit
-    @RequestMapping("campaign/edit/{id}")
+    /*@RequestMapping("promotion/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("campaign", campaignService.getCampaignById(id));
-        return "campaignform";
+        model.addAttribute("promotion", promoService.getPromoById(id));
+        return "blank";
     }
 
-    //Add New Campaign
-    @RequestMapping("campaign/new")
-    public String newCampaign(Model model){
-        model.addAttribute("campaign", new Campaign());
-        return "campaignform";
+    @RequestMapping("promotion/new")
+    public String newPromotion(Model model){
+        model.addAttribute("promotion", new Promotion());
+        return "blank";
     }
 
-    @RequestMapping(value = "campaign", method = RequestMethod.POST)
-    public String saveCampaign(Campaign campaign){
+    @RequestMapping(value = "promotion", method = RequestMethod.POST)
+    public String savePromotion(Promotion promotion){
 
-        campaignService.saveCampaign(campaign);
+        promoService.savePromo(promotion);
 
-        //Opens Newly added Campaign
-//        return "redirect:/campaigns" + campaign.getId();
-        return "redirect:/campaigns";
+        return "redirect:/promotion/" + promotion.getId();
     }
 
-
+    @RequestMapping(value = "*")
+    public String noValue(){
+        return "errorPage";
+    }*/
 
 }
