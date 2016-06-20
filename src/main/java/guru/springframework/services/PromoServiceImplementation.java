@@ -5,6 +5,8 @@ import guru.springframework.repositories.PromoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PromoServiceImplementation implements PromoService {
     private PromoRepository promoRepository;
@@ -28,4 +30,7 @@ public class PromoServiceImplementation implements PromoService {
     public Promotion savePromo(Promotion promotion) {
         return promoRepository.save(promotion);
     }
+
+    public List<Promotion> findById(Integer id) { return promoRepository.findById(id);}
+
 }

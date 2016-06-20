@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 public class Promotion {
@@ -16,6 +17,7 @@ public class Promotion {
     private String imageUrl;
     private String start;
     private String end;
+    private ArrayList<Product> products;
 
     public String getDescription() {
         return description;
@@ -69,6 +71,13 @@ public class Promotion {
 
     public void setEnd(String end) {
         this.end = end;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 
 }
