@@ -28,10 +28,10 @@
                 </div>
             </div>
             <div th:if="${promotionsAll != null}">
-                <select th:field="*{promoIDs}">
+                <select th:field="*{promoIDs}" multiple>
                     <option th:each="dropDownItem : ${promotionsAll}"
                             th:value="${dropDownItem.id}"
-                            th:text="${dropDownItem.name}" />
+                            th:text="${dropDownItem.id} + ${dropDownItem.name}"></option>
                 </select>
             </div>
             <div th:if="${promotionsAll == null}">

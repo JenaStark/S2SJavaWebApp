@@ -52,9 +52,4 @@ public class PromotionController {
         return "redirect:/promotion/" + promotion.getId();
     }
 
-    @RequestMapping(value = "*")
-    public String noValue(){
-        return "errorPage";
-    }
-
 }
