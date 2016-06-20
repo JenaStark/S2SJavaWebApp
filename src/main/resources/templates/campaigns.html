@@ -10,13 +10,13 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
     <div th:if="${not #lists.isEmpty(campaigns)}">
-        <h2>Product List</h2>
+        <h2>Campaign List</h2>
         <table class="table table-striped">
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>View</th>
+                <th>View Promotions</th>
                 <th>Edit</th>
             </tr>
             <tr th:each="campaign : ${campaigns}">

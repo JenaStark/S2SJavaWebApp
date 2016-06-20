@@ -29,7 +29,7 @@ public class PromotionController {
     @RequestMapping("promotion/{id}")
     public String showPromotion(@PathVariable Integer id, Model model){
         model.addAttribute("promotion", promoService.getPromoById(id));
-        return "promotionshow";
+        return "promoshow";
     }
 
     @RequestMapping("promotion/edit/{id}")

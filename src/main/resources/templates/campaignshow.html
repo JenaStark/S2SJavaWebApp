@@ -11,8 +11,8 @@
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
     <div th:if="${not #lists.isEmpty(campaign.promoIDs)}">
-        <h2>Campaign Details #</h2>
-        <h2 th:text="${campaign.id}"></h2>
+        <span><h2>Campaign # </h2><h2 th:text="${campaign.id}"></h2></span>
+
         <h2>Associated Promotions</h2>
         <table class="table table-striped">
             <tr>
