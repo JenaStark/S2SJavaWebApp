@@ -43,36 +43,42 @@ public class CampaignController {
     public String showCampaign(@PathVariable Integer id, Model model){
         model.addAttribute("campaign", campaignService.getCampaignById(id));
         List<Promotion> promotions = new ArrayList<Promotion>();
-        for (Integer idnum: campaignService.getCampaignById(id).getPromoIDs()) {
-            promotions.addAll(promoService.findById(idnum));
+        if(campaignService.getCampaignById(id).getPromoIDs() != null) {
+            for (Integer idnum : campaignService.getCampaignById(id).getPromoIDs()) {
+                promotions.add(promoService.getPromoById(idnum));
+            }
         }
         model.addAttribute("promotions", promotions);
         return "campaignshow";
     }
 
-    /*@RequestMapping("promotion/edit/{id}")
+    @RequestMapping("campaign/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("promotion", promoService.getPromoById(id));
-        return "blank";
+        model.addAttribute("campaign", campaignService.getCampaignById(id));
+        List<Promotion> promotions = new ArrayList<Promotion>();
+        if(campaignService.getCampaignById(id).getPromoIDs() != null) {
+            for (Integer idnum : campaignService.getCampaignById(id).getPromoIDs()) {
+                promotions.add(promoService.getPromoById(idnum));
+            }
+        }
+        model.addAttribute("promotionsCurrent", promotions);
+        model.addAttribute("promotionsAll", promoService.listAllPromotions());
+        return "campaignform";
     }
 
-    @RequestMapping("promotion/new")
-    public String newPromotion(Model model){
-        model.addAttribute("promotion", new Promotion());
-        return "blank";
+    @RequestMapping("campaign/new")
+    public String newCampaign(Model model){
+        model.addAttribute("campaign", new Campaign());
+        model.addAttribute("promotionsAll", promoService.listAllPromotions());
+        return "campaignform";
     }
 
-    @RequestMapping(value = "promotion", method = RequestMethod.POST)
-    public String savePromotion(Promotion promotion){
+    @RequestMapping(value = "campaign", method = RequestMethod.POST)
+    public String saveCampaign(Campaign campaign){
 
-        promoService.savePromo(promotion);
+        campaignService.saveCampaign(campaign);
 
-        return "redirect:/promotion/" + promotion.getId();
+        return "redirect:/campaign/" + campaign.getId();
     }
-
-    @RequestMapping(value = "*")
-    public String noValue(){
-        return "errorPage";
-    }*/
 
 }
