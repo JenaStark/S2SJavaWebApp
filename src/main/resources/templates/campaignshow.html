@@ -10,7 +10,7 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <div th:if="${not #lists.isEmpty(campaign.promoIDs)}">
+    <div th:if="${campaign.promoIDs != null and not #lists.isEmpty(campaign.promoIDs)}">
         <span><h2>Campaign # </h2><h2 th:text="${campaign.id}"></h2></span>
 
         <h2>Associated Promotions</h2>
@@ -35,6 +35,10 @@
 
 
     </div>
+
+    <div th:if="${campaign.promoIDs == null and #lists.isEmpty(campaign.promoIDs)}">
+        <h2>No promotions to show! Add one!</h2>
+        </div>
 </div>
 
 </body>
