@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
-public class ProductLoader {
+public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>{
 
     private ProductRepository productRepository;
 
@@ -22,7 +22,8 @@ public class ProductLoader {
         this.productRepository = productRepository;
     }
 
-    /**@Override
+
+    @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
         Product shirt = new Product();
@@ -42,5 +43,6 @@ public class ProductLoader {
         productRepository.save(mug);
 
         log.info("Saved Mug - id:" + mug.getId());
-    }*/
+
+    }
 }
