@@ -27,14 +27,14 @@
                     <input type="text" class="form-control" th:field="*{description}"/>
                 </div>
             </div>
-            <div th:if="${promotionsAll!=null}">
+            <div th:if="${promotionsAll != null}">
                 <select th:field="*{promoIDs}" multiple>
                     <option th:each="dropDownItem : ${promotionsAll}"
                             th:value="${dropDownItem.id}"
-                            th:text="${dropDownItem.id} + ${dropDownItem.name}" ></option>
+                            th:text="${dropDownItem.id} + ${dropDownItem.name}"></option>
                 </select>
             </div>
-            <div th:if="${promotionsAll==null}">
+            <div th:if="${promotionsAll == null}">
                 <div>"No promotions were found, please create some first"</div>
             </div>
 
