@@ -17,7 +17,8 @@ public class Promotion {
     private String imageUrl;
     private String start;
     private String end;
-    private ArrayList<Product> products;
+    private ArrayList<Integer> storeIDs;
+    private ArrayList<Integer> productIDs;
 
     public String getDescription() {
         return description;
@@ -73,11 +74,19 @@ public class Promotion {
         this.end = end;
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
+    public ArrayList<Integer> getProductIDs() {
+        return productIDs;
     }
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
+    public void setProductIDs(ArrayList<Integer> productIDs) {
+        this.productIDs = productIDs;
     }
+
+    public ArrayList<Integer> getStoreIDs() {
+        return storeIDs;
+    }
+    public void setStoreIDs(ArrayList<Integer> storeIDs) {
+        this.storeIDs = storeIDs;
+    }
+
 
 }
