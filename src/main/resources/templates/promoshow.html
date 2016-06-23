@@ -41,6 +41,8 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Product Number</th>
+                <th>Shelf Number</th>
+                <th>Bin Number</th>
                 <th>View</th>
                 <th>Edit</th>
             </tr>
@@ -49,6 +51,11 @@
                 <td th:text="${product.description}">Description</td>
 
                 <td th:text="${product.productId}">Product Number</td>
+                <td th:text="${product.shelf}">Shelf Number</td>
+
+                <td th:text="${product.bin}">Bin Number</td>
+
+
 
                 <td><a th:href="${ '/promotion/' + promotion.id}">View</a></td>
                 <td><a th:href="${'/promotion/edit/' + promotion.id}">Edit</a></td>

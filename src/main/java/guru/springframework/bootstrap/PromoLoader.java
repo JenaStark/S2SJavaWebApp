@@ -65,6 +65,8 @@ public class PromoLoader implements ApplicationListener<ContextRefreshedEvent>{
         mug.setImageUrl("https://springframework.guru/wp-content/uploads/2015/04/spring_framework_guru_coffee_mug-r11e7694903c348e1a667dfd2f1474d95_x7j54_8byvr_512.jpg");
         mug.setProductId("168639393495335947");
         mug.setPrice(new BigDecimal("11.95"));
+        mug.setShelf(5);
+        mug.setBin(3);
         productRepository.save(mug);
 
     ArrayList<Integer> productIDs = new ArrayList<>();

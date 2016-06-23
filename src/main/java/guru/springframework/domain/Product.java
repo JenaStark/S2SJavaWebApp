@@ -17,6 +17,8 @@ public class Product implements Serializable{
     private String description;
     private String imageUrl;
     private BigDecimal price;
+    private Integer shelf;
+    private Integer bin;
 
     public String getDescription() {
         return description;
@@ -65,4 +67,21 @@ public class Product implements Serializable{
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    public Integer getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(Integer shelf) {
+        this.shelf = shelf;
+    }
+
+    public Integer getBin() {
+        return bin;
+    }
+
+    public void setBin(Integer bin) {
+        this.bin = bin;
+    }
+
 }
