@@ -293,6 +293,34 @@
                                     <input type="date" class="form-control round-form" th:field="*{end}"/>
                                 </div>
                             </div>
+                            <div class="form-group" th:if="${products != null}">
+                                <label class="col-sm-2 control-label">Products:</label>
+                                <div class="col-sm-10">
+                                    <select class = "form-control round-form" th:field="*{productIDs}" multiple>
+                                        <option th:each="dropDownItem : ${products}"
+                                                th:value="${dropDownItem.id}"
+                                                th:text="${dropDownItem.id}  + ')  ' +  ${dropDownItem.description}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div th:if="${products == null}">
+                                <div>"No products were found, please create some first"</div>
+                            </div>
+
+                            <div class="form-group" th:if="${stores != null}">
+                                <label class="col-sm-2 control-label">Stores:</label>
+                                <div class="col-sm-10">
+                                    <select class = "form-control round-form" th:field="*{storeIDs}" multiple>
+                                        <option th:each="dropDownItem : ${stores}"
+                                                th:value="${dropDownItem.id}"
+                                                th:text="${dropDownItem.storeNumber}  + ')  ' +  ${dropDownItem.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div th:if="${stores == null}">
+                                <div>"No stores were found, please create some first"</div>
+                            </div>
+
                             <div class="form-group">
                                 <button type="submit" class="btn btn-default">Submit</button>
                             </div>

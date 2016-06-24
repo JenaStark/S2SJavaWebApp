@@ -10,14 +10,14 @@
   padding-top: 15px;
 }
 
-#unseen form input {
+#unseen form input, #unseen form select {
   margin: 0 auto;
 
 }
 #tabletop {
   padding-bottom: 10px;
 }
-body input {
+body input, body select{
   text-align: center;
 }
 table {
