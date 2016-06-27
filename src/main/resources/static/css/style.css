@@ -436,7 +436,13 @@ ul.sidebar-menu li a.active i {
     background: #ffd777;
     border-bottom: 1px solid #c9aa5f;
 }
+#tablez h3{
+    padding-bottom: 20px;
 
+}
+#tablez div {
+    padding-bottom: 2%;
+}
 .wrapper {
     display: inline-block;
     margin-top: 60px;
@@ -2279,7 +2285,7 @@ label {
     width: 100%;
 }
 
-#main-content form input, #main-content form textarea {
+#main-content form input, #main-content form textarea, #main-content form select, #submit {
     border: 2px solid #959595;
     border-radius: 10px;
     color: #252525;
@@ -2310,8 +2316,9 @@ label {
     border-radius: 10px;
 }
 #main-content form #submit {
+    margin: 0 auto;
     align-self: center;
-    background: #5CACD5;
+    background: #f4ebe3;
     color: #fff;
     font-family: "Arial Black", Gadget, sans-serif;
     font-size: 15px;
@@ -2322,7 +2329,7 @@ label {
 
 
 #main-content form #submit:hover {
-    background: #5CACD5;
+    background: #c5c4bb;
     color: #252525;
     cursor: pointer;
 }

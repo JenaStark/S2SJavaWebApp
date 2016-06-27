@@ -94,4 +94,12 @@ public class PromotionController {
         return "redirect:/promotion/" + promotion.getId();
     }
 
+    @RequestMapping("*/promoform.html")
+    public String newPromotion2(Model model){
+        model.addAttribute("promotion", new Promotion());
+        model.addAttribute("products", productService.listAllProducts());
+        model.addAttribute("stores", storeService.listAllStores());
+        return "blank";
+    }
+
 }
