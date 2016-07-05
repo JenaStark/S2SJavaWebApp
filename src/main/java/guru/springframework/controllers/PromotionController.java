@@ -6,13 +6,17 @@ import guru.springframework.domain.Store;
 import guru.springframework.services.StoreService;
 import guru.springframework.domain.Product;
 import guru.springframework.services.ProductService;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +54,7 @@ public class PromotionController {
     }
 
     @RequestMapping("promotion/{id}")
-    public String showPromotion(@PathVariable Integer id, Model model){
+    public String showPromotion(@PathVariable("id") Integer id, Model model){
         model.addAttribute("promotion", promoService.getPromoById(id));
         List<Store> stores = new ArrayList<Store>();
         if(promoService.getPromoById(id).getStoreIDs() != null) {
@@ -70,6 +74,24 @@ public class PromotionController {
         return "promoshow";
     }
 
+    @RequestMapping(value="promotion/singleSave", method=RequestMethod.POST )
+    public void singleSave(@RequestParam("file") MultipartFile file){
+
+        String fileName = null;
+        if (!file.isEmpty()) {
+            try {
+                fileName = file.getOriginalFilename();
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream buffStream =
+                        new BufferedOutputStream(new FileOutputStream(new File("/tmp/" + fileName)));
+                buffStream.write(bytes);
+                buffStream.close();
+            } catch (Exception e) {
+            }
+        } else {
+        }
+    }
+
     @RequestMapping("promotion/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
         model.addAttribute("promotion", promoService.getPromoById(id));
@@ -83,13 +105,31 @@ public class PromotionController {
         model.addAttribute("promotion", new Promotion());
         model.addAttribute("products", productService.listAllProducts());
         model.addAttribute("stores", storeService.listAllStores());
+
         return "blank";
     }
 
     @RequestMapping(value = "promotion", method = RequestMethod.POST)
-    public String savePromotion(Promotion promotion){
+    public String savePromotion(Promotion promotion, @RequestParam("file") MultipartFile file){
 
-        promoService.savePromo(promotion);
+        String fileName = null;
+        BufferedOutputStream buffStream = null;
+        if (!file.isEmpty()) {
+            try {
+                fileName = file.getOriginalFilename();
+                byte[] bytes = file.getBytes();
+                buffStream =
+                        new BufferedOutputStream(new FileOutputStream(new File("/tmp/" + fileName)));
+                buffStream.write(bytes);
+                buffStream.close();
+            } catch (Exception e) {
+            } finally {
+               IOUtils.closeQuietly(buffStream);
+            }
+        } else {
+        }
+    promotion.setFileLoc("/tmp/" + fileName);
+    promoService.savePromo(promotion);
 
         return "redirect:/promotion/" + promotion.getId();
     }

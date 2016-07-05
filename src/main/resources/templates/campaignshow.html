@@ -263,7 +263,15 @@
     <section id="main-content">
         <section class="wrapper site-min-height">
             <div id ="tablez">
-                <h3 th:text = "'Campaign #' +' '+ ${campaign.id}"><i class="fa fa-angle-right"></i></h3>
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" id="add" th:href="${'/campaign/edit/' + campaign.id}"><i class="fa fa-pencil-square-o"></i>      Edit</a></li>
+                </ul>
+                <h2 th:text = "'Campaign #' +' '+ ${campaign.id}"><i class="fa fa-angle-right"></i></h2>
+                <h4 th:text = "'Campaign Name:' +' '+ ${campaign.name}"></h4>
+
+
+                <h5 th:text = "'Description:' +' '+ ${campaign.description}"></h5>
+
 
                 <div id="unseen">
     <div th:if="${campaign.promoIDs != null and not #lists.isEmpty(campaign.promoIDs)}">
@@ -274,6 +282,9 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Reference Image</th>
                 <th>View</th>
                 <th>Edit</th>
             </tr>
@@ -282,6 +293,9 @@
                 <td th:text="${promotion.name}">Name</td>
 
                 <td th:text="${promotion.description}">description</td>
+                <td th:text="${promotion.start}">Start</td>
+                <td th:text="${promotion.end}">End</td>
+                <td th:text="${promotion.fileName}">File Name</td>
 
                 <td><a th:href="${ '/promotion/' + promotion.id}">View</a></td>
                 <td><a th:href="${'/promotion/edit/' + promotion.id}">Edit</a></td>

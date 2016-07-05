@@ -267,7 +267,9 @@
     <section id="main-content">
         <section class="wrapper site-min-height">
             <h3><i class="fa fa-angle-right"></i> Current Campaigns</h3>
-
+            <ul class="nav pull-right top-menu">
+                <li><a class="logout" id="add" href="campaign/new"><i class="fa fa-plus-square"></i>      Add</a></li>
+            </ul>
             <div id="unseen">
     <div th:if="${not #lists.isEmpty(campaigns)}">
         <table id="productTable">

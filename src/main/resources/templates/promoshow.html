@@ -22,6 +22,22 @@
 
         <link href="/css/table-responsive.css" rel="stylesheet"/>
 
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+
+
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyA5msht5zKOR_Yf1-lMvDE6bk5O-y8icNo",
+                authDomain: "s2swebapp.firebaseapp.com",
+                databaseURL: "https://s2swebapp.firebaseio.com",
+                storageBucket: "",
+            };
+            firebase.initializeApp(config);
+        </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
@@ -263,9 +279,22 @@
     <section id="main-content">
         <section class="wrapper site-min-height">
             <div id ="tablez">
-            <h3 th:text = "'Promotion #' +' '+ ${promotion.id}"><i class="fa fa-angle-right"></i></h3>
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" id="add" th:href="${'/promotion/edit/' + promotion.id}"><i class="fa fa-pencil-square-o"></i>      Edit</a></li>
+                </ul>
+            <h2 th:text = "'Promotion #' +' '+ ${promotion.id}"><i class="fa fa-angle-right"></i></h2>
 
-            <div id="unseen">
+                <h4 th:text = "'Promotion Name:' +' '+ ${promotion.name}"></h4>
+                <h5 th:text = "'Description:' +' '+ ${promotion.description}"></h5>
+
+                <h5 th:text = "'Start Date:' +' '+ ${promotion.start}"></h5>
+
+                <h5 th:text = "'End Date:' +' '+ ${promotion.end}"></h5>
+
+
+
+
+                <div id="unseen">
     <div th:if="${promotion.storeIDs != null and not #lists.isEmpty(promotion.storeIDs)}">
 
         <h3><i class="fa fa-angle-right"></i> Associated Stores</h3>
@@ -274,16 +303,17 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Store Number</th>
+                <th>Status</th>
+
                 <th>View</th>
                 <th>Edit</th>
-                <th>Status</th>
             </tr>
             <tr th:each="store : ${stores}">
                 <td th:text="${store.id}"><a href="/promotion/${promotion.id}">Id</a></td>
                 <td th:text="${store.name}">Name</td>
 
                 <td th:text="${store.storeNumber}">Store Number</td>
-
+                <td></td>
                 <td><a th:href="${ '/store/' + store.id}">View</a></td>
                 <td><a th:href="${'/store/edit/' + store.id}">Edit</a></td>
             </tr>

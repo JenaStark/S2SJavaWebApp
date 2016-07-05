@@ -452,6 +452,9 @@ ul.sidebar-menu li a.active i {
     padding-top: 0px;
     width: 100%;
 }
+#add {
+    margin-bottom: 20px;
+}
 
 a.logo {
     font-size: 20px;
@@ -2303,31 +2306,27 @@ label {
 /*test
 */
 #description {
-    height: 175px;
+    height: 100px;
     overflow: auto;
     resize: none;
 }
 #main-content form textarea {
-    height: 175px;
+    height: 100px;
     overflow: auto;
     resize: none;
 }
 #main-content form #file {
     border-radius: 10px;
 }
-#main-content form #submit {
+#main-content form #submit2 {
     margin: 0 auto;
     align-self: center;
-    background: #f4ebe3;
-    color: #fff;
-    font-family: "Arial Black", Gadget, sans-serif;
-    font-size: 15px;
-    font-weight: normal;
-    display: inline-block;
-    padding: 20px 28px;
+
 }
 
-
+select {
+    height: 50px;
+}
 #main-content form #submit:hover {
     background: #c5c4bb;
     color: #252525;

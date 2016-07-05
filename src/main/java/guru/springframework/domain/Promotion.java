@@ -19,6 +19,8 @@ public class Promotion {
     private String end;
     private ArrayList<Integer> storeIDs;
     private ArrayList<Integer> productIDs;
+    private String fileLoc;
+    private String fileName;
 
     public String getDescription() {
         return description;
@@ -87,6 +89,12 @@ public class Promotion {
     public void setStoreIDs(ArrayList<Integer> storeIDs) {
         this.storeIDs = storeIDs;
     }
+
+    public String getFileLoc() { return fileLoc; }
+    public void setFileLoc(String fileLoc) { this.fileLoc = fileLoc; }
+
+    public String getFileName() { return fileName; }
+    public void setFileName(String fileName) { this.fileName = fileName; }
 
 
 }

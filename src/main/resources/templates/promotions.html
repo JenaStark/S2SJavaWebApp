@@ -268,6 +268,10 @@
           <section class="wrapper site-min-height">
               <h3><i class="fa fa-angle-right"></i> Current Promotions</h3>
 
+              <ul class="nav pull-right top-menu">
+                  <li><a class="logout" id="add" href="promotion/new"><i class="fa fa-plus-square"></i>      Add</a></li>
+              </ul>
+
               <div id="unseen">
                   <div th:if="${not #lists.isEmpty(promotions)}">
                       <table id="productTable">
@@ -277,6 +281,7 @@
                               <th>Description</th>
                               <th>Start</th>
                               <th>End</th>
+                              <th>Reference Image</th>
                               <th>View</th>
                               <th>Edit</th>
                           </tr>
@@ -287,6 +292,7 @@
                               <td th:text="${promotion.description}">description</td>
                               <td th:text="${promotion.start}">Start</td>
                               <td th:text="${promotion.end}">End</td>
+                              <td th:text="${promotion.fileName}">File Name</td>
                               <td><a th:href="${ '/promotion/' + promotion.id}">View</a></td>
                               <td><a th:href="${'/promotion/edit/' + promotion.id}">Edit</a></td>
                           </tr>

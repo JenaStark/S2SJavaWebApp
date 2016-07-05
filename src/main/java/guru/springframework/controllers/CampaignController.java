@@ -53,7 +53,7 @@ public class CampaignController {
     }
 
     @RequestMapping("campaign/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model){
+    public String edit(@PathVariable("id") Integer id, Model model){
         model.addAttribute("campaign", campaignService.getCampaignById(id));
         List<Promotion> promotions = new ArrayList<Promotion>();
         if(campaignService.getCampaignById(id).getPromoIDs() != null) {
