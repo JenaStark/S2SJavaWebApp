@@ -14,4 +14,14 @@ public class IndexController {
     String indexhtml() {
         return "index";
     }
+
+    @RequestMapping("/about")
+    String about() {
+        return "about";
+    }
+
+    @RequestMapping("/data")
+    String data() {
+        return "data";
+    }
 }

@@ -13,4 +13,6 @@ public interface PromoStoreService {
     PromotionStore savePromotionStore(PromotionStore promotionStore);
 
     List<PromotionStore> findByPromoID(Integer id);
+
+    PromotionStore findByPromoIDAndStoreID(Integer promoID, Integer storeID);
 }

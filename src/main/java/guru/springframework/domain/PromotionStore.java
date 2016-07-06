@@ -16,6 +16,7 @@ public class PromotionStore {
 
     private Integer storeID;
     private Integer promoID;
+    private String status;
 
     public Integer getVersion() {
         return version;
@@ -47,6 +48,14 @@ public class PromotionStore {
 
     public void setPromoID(Integer promoID) {
         this.promoID = promoID;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

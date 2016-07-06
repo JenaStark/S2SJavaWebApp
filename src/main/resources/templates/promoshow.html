@@ -308,14 +308,14 @@
                 <th>View</th>
                 <th>Edit</th>
             </tr>
-            <tr th:each="store : ${stores}">
-                <td th:text="${store.id}"><a href="/promotion/${promotion.id}">Id</a></td>
-                <td th:text="${store.name}">Name</td>
+            <tr th:each="storeStat : ${storeStats}">
+                <td th:text="${storeStat.key.id}"><a href="/promotion/${promotion.id}">Id</a></td>
+                <td th:text="${storeStat.key.name}">Name</td>
 
-                <td th:text="${store.storeNumber}">Store Number</td>
-                <td></td>
-                <td><a th:href="${ '/store/' + store.id}">View</a></td>
-                <td><a th:href="${'/store/edit/' + store.id}">Edit</a></td>
+                <td th:text="${storeStat.key.storeNumber}">Store Number</td>
+                <td th:text="${storeStat.value}">Status</td>
+                <td><a th:href="${ '/store/' + storeStat.key.id}">View</a></td>
+                <td><a th:href="${'/store/edit/' + storeStat.key.id}">Edit</a></td>
             </tr>
         </table>
         </div>

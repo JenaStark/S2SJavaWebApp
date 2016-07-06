@@ -10,4 +10,6 @@ public interface PromoStoreRepository extends CrudRepository<PromotionStore, Int
 
     List<PromotionStore> findByPromoID(Integer id);
 
+    PromotionStore findByPromoIDAndStoreID(Integer promoID, Integer storeID);
+
 }
