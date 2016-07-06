@@ -197,7 +197,6 @@
     <!-- **********************************************************************************************************************************************************
     MAIN SIDEBAR MENU
     *********************************************************************************************************************************************************** -->
-    <!--sidebar start-->
     <aside>
         <div id="sidebar"  class="nav-collapse ">
             <!-- sidebar menu start-->
@@ -207,45 +206,48 @@
                 <h5 class="centered">Hive Inc</h5>
 
                 <li class="mt">
-                    <a href="/index.html">
+                    <a href="/">
                         <i class="fa fa-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
 
+
+
                 <li class="sub-menu">
-                    <a href="javascript:;" >
-                        <i class="fa fa-cogs"></i>
-                        <span>Components</span>
+                    <a  class = "active" href="javascript:;" >
+                        <i class="fa fa-tags"></i>
+                        <span>Campaigns</span>
                     </a>
                     <ul class="sub">
-                        <li><a  href="calendar.html">Calendar</a></li>
-                        <li><a  href="gallery.html">Gallery</a></li>
-                        <li><a  href="general.html">General</a></li>
-                        <li><a  href="buttons.html">Buttons</a></li>
-                        <li><a  href="panels.html">Panels</a></li>
-                        <li><a  href="form_component.html">Form Components</a></li>
-                        <li><a  href="basic_table.html">Basic Table</a></li>
-                        <li><a  href="responsive_table.html">Responsive Table</a></li>
-                        <li><a  href="morris.html">Morris</a></li>
-                        <li><a  href="chartjs.html">Chartjs</a></li>
+                        <li><a  href="/campaigns">Show Campaigns</a></li>
+                        <li><a  href="/campaign/new">Add Campaign</a></li>
 
                     </ul>
                 </li>
+
                 <li class="sub-menu">
                     <a href="javascript:;" >
-                        <i class="fa fa-book"></i>
-                        <span>Content</span>
+                        <i class="fa fa-tag"></i>
+                        <span>Promotions</span>
                     </a>
                     <ul class="sub">
-                        <li><a  href="/promoform.html">Show Promotions</a></li>
-                        <li class = "active"><a  href="blank.html">Add Promotion</a></li>
-                        <li><a  href="about.html">About</a></li>
-                        <li><a  href="login.html">Login</a></li>
-                        <li><a  href="lock_screen.html">Lock Screen</a></li>
+                        <li><a href="/promotions">Show Promotions</a></li>
+                        <li><a  href="/promotion/new">Add Promotion</a></li>
+
                     </ul>
                 </li>
+
+                <li><a  href="/data"><i class="fa fa-pie-chart"></i>Data Analysis</a></li>
+
+
+                <li><a  href="/about"><i class="fa fa-info"></i>About</a></li>
+                <li><a  href="/login"><i class="fa fa-unlock"></i>Login</a></li>
+
+                <li><a  href="/lock"><i class="fa fa-lock"></i>Lock Screen</a></li>
+
+
 
 
 
@@ -254,6 +256,7 @@
         </div>
     </aside>
     <!--sidebar end-->
+
 
     <!-- **********************************************************************************************************************************************************
     MAIN CONTENT

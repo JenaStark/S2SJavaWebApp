@@ -84,7 +84,7 @@ public class PromotionController {
                 promoStore = promoStoreService.findByPromoIDAndStoreID(id, store.getId());
                 String status;
                 if (promoStore.getStatus() == null) {
-                    status = "Not completed.";
+                    status = "Not completed";
                 } else {
                     status = promoStore.getStatus();
                 }
@@ -166,7 +166,7 @@ public class PromotionController {
 
                 promoStore.setPromoID(promotion.getId());
                 promoStore.setStoreID(idnum);
-                promoStore.setStatus("Not completed.");
+                promoStore.setStatus("Not completed");
                 promoStoreService.savePromotionStore(promoStore);
 
             }
