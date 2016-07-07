@@ -287,10 +287,15 @@
                 <ul class="nav pull-right top-menu">
                     <li><a class="logout" id="add" th:href="${'/promotion/edit/' + promotion.id}"><i class="fa fa-pencil-square-o"></i>      Edit</a></li>
                 </ul>
-            <h2 th:text = "'Promotion #' +' '+ ${promotion.id}"><i class="fa fa-angle-right"></i></h2>
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" id="add" th:href="${'/promotion/send/' + promotion.id}"><i class="fa fa-paper-plane"></i>      Send Promotion</a></li>
+                </ul>
+
+                <h2 th:text = "'Promotion #' +' '+ ${promotion.id}"><i class="fa fa-angle-right"></i></h2>
 
                 <h4 th:text = "'Promotion Name:' +' '+ ${promotion.name}"></h4>
                 <h5 th:text = "'Description:' +' '+ ${promotion.description}"></h5>
+
 
                 <h5 th:text = "'Start Date:' +' '+ ${promotion.start}"></h5>
 
@@ -325,17 +330,17 @@
             </tr>
         </table>
         </div>
-                    <div th:if="${promotion.storeIDs == null or #lists.isEmpty(promotion.storeIDs)}">
+                    <div id = "nothing" th:if="${promotion.storeIDs == null or #lists.isEmpty(promotion.storeIDs)}">
                         <h3>No stores added yet to this promotion. Click the edit button to add existing ones!</h3>
                     </div>
 
 
-                    <h3><i class="fa fa-angle-right"></i> Associated Products</h3>
                 <div id="unseen">
                     <div th:if="${promotion.productIDs != null and not #lists.isEmpty(promotion.productIDs)}">
+                        <h3><i class="fa fa-angle-right"></i> Associated Products</h3>
 
 
-                    <table id="productTable">
+                        <table id="productTable">
             <tr>
                 <th>Id</th>
                 <th>Name</th>

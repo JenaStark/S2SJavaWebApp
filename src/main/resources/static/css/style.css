@@ -2327,6 +2327,9 @@ label {
 select {
     height: 50px;
 }
+#nothing {
+    padding-top: 20px;
+}
 #main-content form #submit:hover {
     background: #c5c4bb;
     color: #252525;

@@ -35,7 +35,6 @@ public class PromotionController {
     private ProductService productService;
     private PromoStoreService promoStoreService;
 
-
     @Autowired
     public void setPromoService(PromoService promoService) {
         this.promoService = promoService;
@@ -56,7 +55,6 @@ public class PromotionController {
         this.promoStoreService = promoStoreService;
     }
 
-
     @RequestMapping(value = "/promotions", method = RequestMethod.GET)
     public String list(Model model){
         model.addAttribute("promotions", promoService.listAllPromotions());
@@ -66,48 +64,57 @@ public class PromotionController {
 
     @RequestMapping("promotion/{id}")
     public String showPromotion(@PathVariable("id") Integer id, Model model){
+
         model.addAttribute("promotion", promoService.getPromoById(id));
+
         List<Store> stores = new ArrayList<Store>();
-        if(promoService.getPromoById(id).getStoreIDs() != null) {
+        if (promoService.getPromoById(id).getStoreIDs() != null) {
             for (Integer idnum : promoService.getPromoById(id).getStoreIDs()) {
                 stores.add(storeService.getStoreById(idnum));
             }
         }
 
         List<Product> products = new ArrayList<Product>();
-        if(promoService.getPromoById(id).getProductIDs() != null) {
+
+        if (promoService.getPromoById(id).getProductIDs() != null) {
             for (Integer idnum : promoService.getPromoById(id).getProductIDs()) {
                 products.add(productService.getProductById(idnum));
             }
         }
 
         List<String> storeStatus = new ArrayList<String>();
-            for (Store store: stores) {
-                PromotionStore promoStore = new PromotionStore();
-                promoStore = promoStoreService.findFirstByPromoIDAndStoreID(id, store.getId());
-                String status;
-                if (promoStore.getStatus() == null) {
-                    status = "Not completed";
-                } else {
-                    status = promoStore.getStatus();
-                }
-                storeStatus.add(status);
+
+        for (Store store: stores) {
+            PromotionStore promoStore = new PromotionStore();
+            promoStore = promoStoreService.findFirstByPromoIDAndStoreID(id, store.getId());
+            String status;
+            if (promoStore.getStatus() == null) {
+                status = "Not completed";
+            } else {
+                status = promoStore.getStatus();
             }
+                storeStatus.add(status);
+        }
+
         HashMap<Store, String> storesStats = new HashMap<>();
         int count = 0;
         for (Store store : stores) {
             storesStats.put(store, storeStatus.get(count));
             count++;
         }
+
         Date dateNow = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d = null;
+
         try {
             d = sdf.parse(promoService.getPromoById(id).getEnd());
         } catch (ParseException e) {
 
         }
+
         String expired;
+
         if(d != null && dateNow.compareTo(d) > 0) {
             expired= "Expired or ends today";
         } else if (d == null){
@@ -115,6 +122,7 @@ public class PromotionController {
         } else {
             expired = "Not expired";
         }
+
         model.addAttribute("storeStats", storesStats);
         model.addAttribute("status", storeStatus);
         model.addAttribute("expired", expired);
@@ -127,6 +135,7 @@ public class PromotionController {
     public void singleSave(@RequestParam("file") MultipartFile file){
 
         String fileName = null;
+
         if (!file.isEmpty()) {
             try {
                 fileName = file.getOriginalFilename();
@@ -177,13 +186,13 @@ public class PromotionController {
             }
         } else {
         }
+
     promotion.setFileLoc("/tmp/" + fileName);
     promoService.savePromo(promotion);
 
         if(promoService.getPromoById(promotion.getId()).getStoreIDs() != null) {
             for (Integer idnum : promoService.getPromoById(promotion.getId()).getStoreIDs()) {
                 PromotionStore promoStore = new PromotionStore();
-
                 promoStore.setPromoID(promotion.getId());
                 promoStore.setStoreID(idnum);
                 promoStore.setStatus("Not completed");
@@ -192,14 +201,17 @@ public class PromotionController {
             }
         }
 
-
-
         return "redirect:/promotion/" + promotion.getId();
     }
     @RequestMapping("promotion/{id}/store/{storeID}")
     public String completePromo(@PathVariable("id") Integer id, @PathVariable("storeID") Integer storeID, Model model) {
         return "completePromo";
     }
+
+    @RequestMapping("promotion/send/{id}")
+        public String sendPromotion(@PathVariable("id") Integer id) {
+            return "send";
+        }
 
     @RequestMapping("*/promoform.html")
     public String newPromotion2(Model model){

@@ -15,6 +15,12 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping("/home")
+    String home() {
+        return "index";
+    }
+
+
     @RequestMapping("/about")
     String about() {
         return "about";
@@ -23,5 +29,15 @@ public class IndexController {
     @RequestMapping("/data")
     String data() {
         return "data";
+    }
+
+    @RequestMapping("/login")
+    String login() {
+        return "login";
+    }
+
+    @RequestMapping("/lock")
+    String lock() {
+        return "lock";
     }
 }
