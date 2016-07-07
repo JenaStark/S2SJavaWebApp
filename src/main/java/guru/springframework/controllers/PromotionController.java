@@ -20,7 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -96,8 +99,25 @@ public class PromotionController {
             storesStats.put(store, storeStatus.get(count));
             count++;
         }
+        Date dateNow = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = null;
+        try {
+            d = sdf.parse(promoService.getPromoById(id).getEnd());
+        } catch (ParseException e) {
+
+        }
+        String expired;
+        if(d != null && dateNow.compareTo(d) > 0) {
+            expired= "Expired or ends today";
+        } else if (d == null){
+            expired = "No end date given";
+        } else {
+            expired = "Not expired";
+        }
         model.addAttribute("storeStats", storesStats);
         model.addAttribute("status", storeStatus);
+        model.addAttribute("expired", expired);
         model.addAttribute("stores", stores);
         model.addAttribute("products",products);
         return "promoshow";
