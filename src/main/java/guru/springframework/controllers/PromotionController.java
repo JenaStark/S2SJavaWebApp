@@ -81,7 +81,7 @@ public class PromotionController {
         List<String> storeStatus = new ArrayList<String>();
             for (Store store: stores) {
                 PromotionStore promoStore = new PromotionStore();
-                promoStore = promoStoreService.findByPromoIDAndStoreID(id, store.getId());
+                promoStore = promoStoreService.findFirstByPromoIDAndStoreID(id, store.getId());
                 String status;
                 if (promoStore.getStatus() == null) {
                     status = "Not completed";

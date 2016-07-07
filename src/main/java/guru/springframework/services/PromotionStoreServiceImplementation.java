@@ -35,5 +35,5 @@ public class PromotionStoreServiceImplementation implements PromoStoreService {
         return promoStoreRepository.findByPromoID(id);
     }
 
-    public PromotionStore findByPromoIDAndStoreID(Integer promoID, Integer storeID) {return promoStoreRepository.findByPromoIDAndStoreID(promoID, storeID); }
+    public PromotionStore findFirstByPromoIDAndStoreID(Integer promoID, Integer storeID) {return promoStoreRepository.findFirstByPromoIDAndStoreID(promoID, storeID); }
 }

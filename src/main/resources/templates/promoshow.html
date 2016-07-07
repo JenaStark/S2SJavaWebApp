@@ -324,11 +324,17 @@
             </tr>
         </table>
         </div>
+                    <div th:if="${promotion.storeIDs == null or #lists.isEmpty(promotion.storeIDs)}">
+                        <h3>No stores added yet to this promotion. Click the edit button to add existing ones!</h3>
+                    </div>
 
-        <h3><i class="fa fa-angle-right"></i> Associated Products</h3>
+
+                    <h3><i class="fa fa-angle-right"></i> Associated Products</h3>
                 <div id="unseen">
+                    <div th:if="${promotion.productIDs != null and not #lists.isEmpty(promotion.productIDs)}">
 
-                <table id="productTable">
+
+                    <table id="productTable">
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -353,8 +359,12 @@
                 <td><a th:href="${'/product/edit/' + product.id}">Edit</a></td>
             </tr>
         </table>
+                        </div>
                     </div>
 
+                    <div th:if="${promotion.productIDs == null or #lists.isEmpty(promotion.productIDs)}">
+                        <h3>No products added yet to this promotion. Click the edit button to add existing ones!</h3>
+                    </div>
 
     </div>
 </div>

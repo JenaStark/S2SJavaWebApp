@@ -305,6 +305,10 @@
                   </div>
               </div>
 
+              <div th:if="${#lists.isEmpty(promotions)}">
+                  <h3>No promotions added yet. Click the add button to create one!</h3>
+              </div>
+
           </section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
 

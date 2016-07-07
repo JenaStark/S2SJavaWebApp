@@ -209,7 +209,7 @@
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
 
-                <p class="centered"><a href="profile.html"><img src="img/beelogo2.jpg" class="img-circle" width="120"></a></p>
+                <p class="centered"><a href="profile.html"><img src="/img/beelogo2.jpg" class="img-circle" width="120"></a></p>
                 <h5 class="centered">Hive Inc</h5>
 
                 <li class="mt">
@@ -309,10 +309,10 @@
 
 
     </div>
+                    <div th:if="${campaign.promoIDs == null or #lists.isEmpty(campaign.promoIDs)}">
+                        <h3>No promotions added yet to this campaign. Click the edit button to add existing ones!</h3>
+                    </div>
 
-    <div th:if="${campaign.promoIDs == null and #lists.isEmpty(campaign.promoIDs)}">
-        <h2>No promotions to show! Add one!</h2>
-        </div>
 </div>
             </div>
         </section><! --/wrapper -->

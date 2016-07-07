@@ -295,7 +295,11 @@
         </table>
 
     </div>
+
 </div>
+            <div th:if="${#lists.isEmpty(campaigns)}">
+                <h3>No campaigns added yet. Click the add button to create one!</h3>
+            </div>
         </section><! --/wrapper -->
     </section><!-- /MAIN CONTENT -->
 
