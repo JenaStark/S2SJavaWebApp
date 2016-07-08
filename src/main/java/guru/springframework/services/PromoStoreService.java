@@ -14,5 +14,5 @@ public interface PromoStoreService {
 
     List<PromotionStore> findByPromoID(Integer id);
 
-    PromotionStore findByPromoIDAndStoreID(Integer promoID, Integer storeID);
+    PromotionStore findFirstByPromoIDAndStoreID(Integer promoID, Integer storeID);
 }
