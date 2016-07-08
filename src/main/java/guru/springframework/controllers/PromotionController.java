@@ -1,25 +1,29 @@
 package guru.springframework.controllers;
 
-import guru.springframework.domain.Promotion;
-import guru.springframework.services.PromoService;
-import guru.springframework.domain.Store;
-import guru.springframework.services.StoreService;
 import guru.springframework.domain.Product;
-import guru.springframework.services.ProductService;
-import guru.springframework.services.PromoStoreService;
+import guru.springframework.domain.Promotion;
 import guru.springframework.domain.PromotionStore;
-import org.apache.commons.io.FilenameUtils;
+import guru.springframework.domain.Store;
+import guru.springframework.services.ProductService;
+import guru.springframework.services.PromoService;
+import guru.springframework.services.PromoStoreService;
+import guru.springframework.services.StoreService;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +35,9 @@ public class PromotionController {
     private StoreService storeService;
     private ProductService productService;
     private PromoStoreService promoStoreService;
+
+
+    private final String USER_AGENT = "Mozilla/5.0";
 
 
     @Autowired
@@ -138,6 +145,20 @@ public class PromotionController {
         return "blank";
     }
 
+    @RequestMapping("promotion/send")
+    public String sendPromotion(Model model){
+//        model.addAttribute("promotion", new Promotion());
+//        model.addAttribute("products", productService.listAllProducts());
+//        model.addAttribute("stores", storeService.listAllStores());
+
+        try {
+            sendPostRequest();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "general";
+    }
+
     @RequestMapping(value = "promotion", method = RequestMethod.POST)
     public String savePromotion(Promotion promotion, @RequestParam("file") MultipartFile file){
 
@@ -176,6 +197,7 @@ public class PromotionController {
 
         return "redirect:/promotion/" + promotion.getId();
     }
+
     @RequestMapping("promotion/{id}/store/{storeID}")
     public String completePromo(@PathVariable("id") Integer id, @PathVariable("storeID") Integer storeID, Model model) {
         return "completePromo";
@@ -189,4 +211,39 @@ public class PromotionController {
         return "blank";
     }
 
+    // HTTP POST request
+    public void sendPostRequest() throws IOException {
+
+        String url = "http://in-cpaas.star2starglobal.com/hook/5776ae04690ee40800000016";
+
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url);
+
+        // add header
+        post.setHeader("User-Agent", USER_AGENT);
+
+        List<BasicNameValuePair> urlParameters = new ArrayList<>();
+        urlParameters.add(new BasicNameValuePair("product", "Shirt"));
+        urlParameters.add(new BasicNameValuePair("start_date", "07/01/2016"));
+        urlParameters.add(new BasicNameValuePair("end_date", "07/07/16"));
+        urlParameters.add(new BasicNameValuePair("description", "Nice Shirts, The Defence Dolphins were Victorious. lol"));
+        urlParameters.add(new BasicNameValuePair("email", "madesegun@star2star.com, jstark@star2star.com"));
+
+        post.setEntity(new UrlEncodedFormEntity(urlParameters));
+
+        org.apache.http.HttpResponse response = client.execute(post);
+        System.out.println("\nSending 'POST' request to URL : " + url);
+        System.out.println("Post parameters : " + post.getEntity());
+        System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+
+        BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+
+        System.out.println(result.toString());
+    }
 }

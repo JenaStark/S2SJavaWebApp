@@ -276,6 +276,12 @@
                   <li><a class="logout" id="add" href="promotion/new"><i class="fa fa-plus-square"></i>      Add</a></li>
               </ul>
 
+              <ul class="nav pull-right top-menu">
+                  <li><a class="logout" id="send" href="promotion/send">
+                      <i class="fa fa-paper-plane" aria-hidden="true"></i>      Send</a>
+                  </li>
+              </ul>
+
               <div id="unseen">
                   <div th:if="${not #lists.isEmpty(promotions)}">
                       <table id="productTable">
