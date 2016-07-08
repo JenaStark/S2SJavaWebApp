@@ -277,31 +277,31 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Promotion Name:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" th:field="*{name}"/>
+                                    <input type="text" required class="form-control" th:field="*{name}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Description:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" th:field="*{description}"/>
+                                    <input type="text" required class="form-control" th:field="*{description}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Start</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control round-form" th:field="*{start}"/>
+                                    <input type="date" required class="form-control round-form" th:field="*{start}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">End:</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control round-form" th:field="*{end}"/>
+                                    <input type="date" required class="form-control round-form" th:field="*{end}"/>
                                 </div>
                             </div>
                             <div class="form-group" th:if="${products != null}">
                                 <label class="col-sm-2 control-label">Products:</label>
                                 <div class="col-sm-10">
-                                    <select class = "form-control round-form" th:field="*{productIDs}" multiple>
+                                    <select class = "form-control round-form" required th:field="*{productIDs}" multiple>
                                         <option th:each="dropDownItem : ${products}"
                                                 th:value="${dropDownItem.id}"
                                                 th:text="${dropDownItem.id}  + ')  ' +  ${dropDownItem.description}"></option>
@@ -315,7 +315,7 @@
                             <div class="form-group" th:if="${stores != null}">
                                 <label class="col-sm-2 control-label">Stores:</label>
                                 <div class="col-sm-10">
-                                    <select th:field="*{storeIDs}" multiple>
+                                    <select required th:field="*{storeIDs}" multiple>
                                         <option th:each="dropDownItem : ${stores}"
                                                 th:value="${dropDownItem.id}"
                                                 th:text="${dropDownItem.storeNumber}  + ')  ' +  ${dropDownItem.name}"></option>
@@ -329,14 +329,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Reference Image Name:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control round-form" th:field="*{fileName}"/>
+                                    <input type="text" required class="form-control round-form" th:field="*{fileName}"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Reference Image:</label>
                                 <div class="col-sm-10">
-                                    <input type="file" name="file" class="form-control round-form"/>
+                                    <input type="file" name="file" required class="form-control round-form"/>
                                 </div>
                             </div>
                             <div class="form-group">
