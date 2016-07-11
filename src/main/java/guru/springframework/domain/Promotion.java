@@ -17,6 +17,7 @@ public class Promotion {
     private String imageUrl;
     private String start;
     private String end;
+    private String instructions;
     private ArrayList<Integer> storeIDs;
     private ArrayList<Integer> productIDs;
     private String fileLoc;
@@ -28,6 +29,14 @@ public class Promotion {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
     public Integer getVersion() {

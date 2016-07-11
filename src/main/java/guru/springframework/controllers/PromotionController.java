@@ -204,6 +204,35 @@ public class PromotionController {
     }
     @RequestMapping("promotion/{id}/store/{storeID}")
     public String completePromo(@PathVariable("id") Integer id, @PathVariable("storeID") Integer storeID, Model model) {
+        model.addAttribute("promotion", promoService.getPromoById(id));
+        model.addAttribute("store", storeService.getStoreById(storeID));
+
+        Date dateNow = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = null;
+        try {
+            d = sdf.parse(promoService.getPromoById(id).getEnd());
+        } catch (ParseException e) {
+
+        }
+        String expired;
+        if(d != null && dateNow.compareTo(d) > 0) {
+            expired= "Expired or ends today";
+        } else if (d == null){
+            expired = "No end date given";
+        } else {
+            expired = "Not expired";
+        }
+
+        List<Product> products = new ArrayList<Product>();
+        if(promoService.getPromoById(id).getProductIDs() != null) {
+            for (Integer idnum : promoService.getPromoById(id).getProductIDs()) {
+                products.add(productService.getProductById(idnum));
+            }
+        }
+
+        model.addAttribute("expired", expired);
+        model.addAttribute("products", products);
         return "completePromo";
     }
 
