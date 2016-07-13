@@ -18,6 +18,9 @@ public class PromotionStore {
     private Integer promoID;
     private String status;
 
+    private String fieldLoc;
+    private String fieldStatus;
+
     public Integer getVersion() {
         return version;
     }
@@ -56,6 +59,22 @@ public class PromotionStore {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getFieldLoc() {
+        return fieldLoc;
+    }
+
+    public void setFieldLoc(String fieldLoc) {
+        this.fieldLoc = fieldLoc;
+    }
+
+    public String getFieldStatus() {
+        return fieldStatus;
+    }
+
+    public void setFieldStatus(String fieldStatus) {
+        this.fieldStatus = fieldStatus;
     }
 
 

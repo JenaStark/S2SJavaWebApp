@@ -321,12 +321,30 @@
                         </div>
                     </div>
 
+                <div class="pull-right">
+                    <div class="col-lg-12">
+                            <form class="form-horizontal style-form" th:object="${promostore}" th:action="@{/promostore}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" th:field="*{id}"/>
+                                <input type="hidden" th:field="*{version}"/>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <label class="btn btn-default btn-file fieldImage">
+                                            Select Field Image <input class = "form-control round-form" type="file" style="display: none;">
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="nav">
+                                    <button type="submit" id="uploadImage"><i class="fa fa-upload"></i> Upload Image</button>
+                                </div>
+                            </form>
+
+                    </div>
+                </div>
+
                     <div th:if="${promotion.productIDs == null or #lists.isEmpty(promotion.productIDs)}">
                         <h3>No products added yet to this promotion. Click the edit button to add existing ones!</h3>
                     </div>
-                <ul id = "pleaseWork">
-                    <li id ="uploadImageLi"><a id="uploadImage" th:href="${'/promotion/' + promotion.id + '/image/' + store.id}"><i class="fa fa-pencil-square-o"></i> Upload Image</a></li>
-                </ul>
 
                 </div>
             </div>
@@ -337,10 +355,8 @@
     <!--footer start-->
     <footer class="site-footer">
         <div class="text-center">
-            2014 - Alvarez.is
-            <a href="promotions.html#" class="go-top">
-                <i class="fa fa-angle-up"></i>
-            </a>
+            Bargain Bee 2016
+
         </div>
     </footer>
     <!--footer end-->

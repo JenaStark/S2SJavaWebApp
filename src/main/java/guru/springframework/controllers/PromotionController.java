@@ -190,20 +190,22 @@ public class PromotionController {
             for (Integer idnum : promoService.getPromoById(promotion.getId()).getStoreIDs()) {
                 PromotionStore promoStore = new PromotionStore();
 
-                promoStore.setPromoID(promotion.getId());
-                promoStore.setStoreID(idnum);
-                promoStore.setStatus("Not completed");
-                promoStoreService.savePromotionStore(promoStore);
+                if(promoStoreService.findFirstByPromoIDAndStoreID(promotion.getId(), idnum) == null) {
+                    promoStore.setPromoID(promotion.getId());
+                    promoStore.setStoreID(idnum);
+                    promoStore.setStatus("Not completed");
+                    promoStoreService.savePromotionStore(promoStore);
+
+                }
 
             }
         }
-
-
 
         return "redirect:/promotion/" + promotion.getId();
     }
     @RequestMapping("promotion/{id}/store/{storeID}")
     public String completePromo(@PathVariable("id") Integer id, @PathVariable("storeID") Integer storeID, Model model) {
+        model.addAttribute("promostore", promoStoreService.findFirstByPromoIDAndStoreID(id, storeID));
         model.addAttribute("promotion", promoService.getPromoById(id));
         model.addAttribute("store", storeService.getStoreById(storeID));
 
@@ -243,6 +245,38 @@ public class PromotionController {
         model.addAttribute("stores", storeService.listAllStores());
         return "blank";
     }
+
+
+  @RequestMapping(value = "promostore", method = RequestMethod.POST)
+    public String uploadPromoImage(PromotionStore promoStore, @RequestParam("file") MultipartFile file){
+
+
+      String fileName = null;
+      BufferedOutputStream buffStream = null;
+      if (!file.isEmpty()) {
+          try {
+              fileName = file.getOriginalFilename();
+              byte[] bytes = file.getBytes();
+              buffStream =
+                      new BufferedOutputStream(new FileOutputStream(new File("/tmp/" + fileName)));
+              buffStream.write(bytes);
+              buffStream.close();
+          } catch (Exception e) {
+          } finally {
+              IOUtils.closeQuietly(buffStream);
+          }
+      } else {
+      }
+
+      promoStore.setFieldLoc("/tmp/" + fileName);
+
+      //check field against reference and set field status and set status to completed if OK
+        promoStore.setStatus("Completed");
+      promoStoreService.savePromotionStore(promoStore);
+
+      return "redirect:/promotion/" + promoStore.getPromoID() + "/store" + promoStore.getStoreID();
+
+  }
 
     @RequestMapping("promotion/send/{id}")
     public String sendPostRequest(@PathVariable("id") Integer id) throws IOException {
