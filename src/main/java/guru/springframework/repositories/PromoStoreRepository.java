@@ -12,4 +12,6 @@ public interface PromoStoreRepository extends CrudRepository<PromotionStore, Int
 
     PromotionStore findFirstByPromoIDAndStoreID(Integer promoID, Integer storeID);
 
+    void delete(PromotionStore promotionStore);
+
 }

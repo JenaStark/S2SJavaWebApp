@@ -33,4 +33,6 @@ public class PromoServiceImplementation implements PromoService {
 
     public List<Promotion> findById(Integer id) { return promoRepository.findById(id);}
 
+    public void delete(Promotion promotion){promoRepository.delete(promotion);}
+
 }

@@ -283,6 +283,7 @@
 
                 <h5 th:text = "'End Date:' +' '+ ${promotion.end}"></h5>
                 <h5 id = "expired" th:text = "'Expired Status:' + ' '+ ${expired}"></h5>
+                <h5 th:text = "'Your Status:' + ' ' + ${promostore.status}"></h5>
 
                 <span id = "divider"> </span>
                     <div id="unseen">
@@ -329,7 +330,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-10">
                                         <label class="btn btn-default btn-file fieldImage">
-                                            Select Field Image <input class = "form-control round-form" type="file" style="display: none;">
+                                            Select Field Image <input required class = "form-control round-form" type="file" style="display: none;">
                                         </label>
                                     </div>
                                 </div>

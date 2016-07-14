@@ -14,4 +14,6 @@ public interface PromoService {
 
     List<Promotion> findById(Integer id);
 
+    void delete(Promotion promotion);
+
 }

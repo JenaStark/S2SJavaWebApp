@@ -502,6 +502,12 @@ ul.sidebar-menu li a.active i {
     margin-bottom: 20px;
 }
 
+#delete {
+    border: 1px solid darkred !important;
+    background: red;
+    color: white;
+}
+
 a.logo {
     font-size: 20px;
     color: #ffffff;

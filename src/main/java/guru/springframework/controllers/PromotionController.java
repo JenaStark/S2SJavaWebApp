@@ -271,12 +271,23 @@ public class PromotionController {
       promoStore.setFieldLoc("/tmp/" + fileName);
 
       //check field against reference and set field status and set status to completed if OK
+      // status --> completed ontime, late, or not completed
         promoStore.setStatus("Completed");
       promoStoreService.savePromotionStore(promoStore);
 
       return "redirect:/promotion/" + promoStore.getPromoID() + "/store" + promoStore.getStoreID();
 
   }
+
+    @RequestMapping(value = "promotion/delete/{id}")
+    public String deletePromo(@PathVariable("id") Integer id) {
+        for (Integer sid : promoService.getPromoById(id).getStoreIDs()) {
+            promoStoreService.delete(promoStoreService.findFirstByPromoIDAndStoreID(id, sid));
+        }
+        promoService.delete(promoService.getPromoById(id));
+
+        return "redirect:/promotions";
+    }
 
     @RequestMapping("promotion/send/{id}")
     public String sendPostRequest(@PathVariable("id") Integer id) throws IOException {

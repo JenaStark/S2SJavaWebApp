@@ -9,4 +9,6 @@ public interface PromoRepository extends CrudRepository<Promotion, Integer>{
 
     List<Promotion> findById(Integer id);
 
+    Integer deleteById(Integer id);
+
 }

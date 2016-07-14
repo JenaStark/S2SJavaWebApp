@@ -15,4 +15,6 @@ public interface PromoStoreService {
     List<PromotionStore> findByPromoID(Integer id);
 
     PromotionStore findFirstByPromoIDAndStoreID(Integer promoID, Integer storeID);
+
+    void delete(PromotionStore promotionStore);
 }

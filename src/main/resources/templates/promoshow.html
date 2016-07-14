@@ -283,13 +283,22 @@
         <!--main content start-->
     <section id="main-content">
         <section class="wrapper site-min-height">
+
+
+
             <div id ="tablez">
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" id="delete" th:href="${'/promotion/delete/' + promotion.id}"><i class="fa fa-times"></i>     Delete</a></li>
+                </ul>
                 <ul class="nav pull-right top-menu">
                     <li><a class="logout" id="add" th:href="${'/promotion/edit/' + promotion.id}"><i class="fa fa-pencil-square-o"></i>      Edit</a></li>
                 </ul>
                 <ul class="nav pull-right top-menu">
-                    <li><a class="logout" id="add" th:href="${'/promotion/send/' + promotion.id}"><i class="fa fa-paper-plane"></i>      Send Promotion</a></li>
+                    <li><a class="logout" id="add" th:href="${'/promotion/send/' + promotion.id}"><i class="fa fa-paper-plane"></i>      Send </a></li>
                 </ul>
+
+
+
 
                 <h2 th:text = "'Promotion #' +' '+ ${promotion.id}"><i class="fa fa-angle-right"></i></h2>
 
