@@ -37,5 +37,7 @@ public class PromotionStoreServiceImplementation implements PromoStoreService {
 
     public void delete(PromotionStore promotionStore){promoStoreRepository.delete(promotionStore);}
 
+    public List<PromotionStore> findByStatus(String status){return promoStoreRepository.findByStatus(status);}
+
     public PromotionStore findFirstByPromoIDAndStoreID(Integer promoID, Integer storeID) {return promoStoreRepository.findFirstByPromoIDAndStoreID(promoID, storeID); }
 }

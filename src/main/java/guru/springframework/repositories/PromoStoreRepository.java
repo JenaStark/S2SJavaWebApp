@@ -14,4 +14,6 @@ public interface PromoStoreRepository extends CrudRepository<PromotionStore, Int
 
     void delete(PromotionStore promotionStore);
 
+    List<PromotionStore> findByStatus(String status);
+
 }

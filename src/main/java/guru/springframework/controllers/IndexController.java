@@ -26,10 +26,6 @@ public class IndexController {
         return "about";
     }
 
-    @RequestMapping("/data")
-    String data() {
-        return "data";
-    }
 
     @RequestMapping("/login")
     String login() {

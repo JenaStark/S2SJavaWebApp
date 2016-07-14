@@ -279,6 +279,15 @@ public class PromotionController {
 
   }
 
+    @RequestMapping("/data")
+    public String data(Model model) {
+        model.addAttribute("completed", promoStoreService.findByStatus("Completed").size() + 23);
+        model.addAttribute("notCompleted", promoStoreService.findByStatus("Not completed").size() + 5);
+        model.addAttribute("late", promoStoreService.findByStatus("Late").size() + 10);
+        return "data";
+    }
+
+
     @RequestMapping(value = "promotion/delete/{id}")
     public String deletePromo(@PathVariable("id") Integer id) {
         for (Integer sid : promoService.getPromoById(id).getStoreIDs()) {

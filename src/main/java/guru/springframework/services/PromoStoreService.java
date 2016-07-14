@@ -17,4 +17,9 @@ public interface PromoStoreService {
     PromotionStore findFirstByPromoIDAndStoreID(Integer promoID, Integer storeID);
 
     void delete(PromotionStore promotionStore);
+
+    List<PromotionStore> findByStatus(String status);
+
+
+
 }
