@@ -113,14 +113,25 @@ public class PromotionController {
                     } catch (ParseException e) {
 
                            }
+
+        String nowDate2 = null;
+        Date nowDate = null;
+        try {
+            nowDate2 = sdf.format(dateNow);
+            nowDate = sdf.parse(nowDate2);
+        } catch (ParseException e) {
+        }
+
                 String expired;
-                if(d != null && dateNow.compareTo(d) > 0) {
-                        expired= "Expired or ends today";
+                if(d != null && nowDate.compareTo(d) > 0) {
+                        expired= "Expired";
                     } else if (d == null){
                         expired = "No end date given";
-                    } else {
+                    } else if(nowDate.compareTo(d) < 0) {
                         expired = "Not expired";
-                    }
+                    } else {
+                     expired = "Ends today";
+                }
         model.addAttribute("storeStats", storesStats);
         model.addAttribute("expired", expired);
         model.addAttribute("status", storeStatus);
@@ -269,6 +280,8 @@ public class PromotionController {
       }
 
       promoStore.setFieldLoc("/tmp/" + fileName);
+      String fieldImage = promoStore.getFieldLoc();
+      String referenceImage = promoService.getPromoById(promoStore.getPromoID()).getFileLoc();
 
       //check field against reference and set field status and set status to completed if OK
       // status --> completed ontime, late, or not completed
@@ -290,8 +303,10 @@ public class PromotionController {
 
     @RequestMapping(value = "promotion/delete/{id}")
     public String deletePromo(@PathVariable("id") Integer id) {
-        for (Integer sid : promoService.getPromoById(id).getStoreIDs()) {
-            promoStoreService.delete(promoStoreService.findFirstByPromoIDAndStoreID(id, sid));
+        if(promoService.getPromoById(id).getStoreIDs() != null) {
+            for (Integer sid : promoService.getPromoById(id).getStoreIDs()) {
+                promoStoreService.delete(promoStoreService.findFirstByPromoIDAndStoreID(id, sid));
+            }
         }
         promoService.delete(promoService.getPromoById(id));
 
@@ -337,7 +352,7 @@ public class PromotionController {
             System.out.println("Post parameters : " + post.getEntity());
             System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
             StringBuffer result = new StringBuffer();
             String line = "";

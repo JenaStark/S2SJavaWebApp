@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="css/base.css" />
 
     <link href="css/table-responsive.css" rel="stylesheet"/>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
@@ -65,9 +66,13 @@
             ]);
 
             // Set chart options
-            var options = {'title':'Total Status Distribution of Every Store Within All Promotions',
-                'width':400,
+            var options = {
+                'width':500,
+                'chartArea':{'left':40,'top':20,'width':"100%",'height':"100%"},
+                'pieHole': 0.4,
+                'colors': ['red', 'orange','green'],
                 'height':300};
+
 
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -83,7 +88,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body onLoad="init()">
 
 <section id="container" >
     <!-- **********************************************************************************************************************************************************
@@ -206,7 +211,7 @@
                         </li>
                         <li>
                             <a href="index.html#">
-                                <span class="photo"><img alt="avatar" src="assets/img/ui-danro.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="img/ui-danro.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Dan Rogers</span>
                                     <span class="time">2 hrs.</span>
@@ -218,7 +223,7 @@
                         </li>
                         <li>
                             <a href="index.html#">
-                                <span class="photo"><img alt="avatar" src="assets/img/ui-sherman.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="img/ui-sherman.jpg"></span>
                                     <span class="subject">
                                     <span class="from">Dj Sherman</span>
                                     <span class="time">4 hrs.</span>
@@ -313,10 +318,67 @@
     *********************************************************************************************************************************************************** -->
     <!--main content start-->
     <section id="main-content">
-        <section class="wrapper site-min-height">
-            <div id="chart_div"></div>
-
-        </section><! --/wrapper -->
+        <section class="wrapper">
+            <h3><i class="fa fa-angle-right"></i> Data Analysis</h3>
+            <!-- page start-->
+            <div class="tab-pane" id="chartjs">
+                <div class="row mt">
+                    <div class="col-lg-6">
+                        <div class="content-panel">
+                            <h4><i class="fa fa-angle-right"></i> Total Status Distribution</h4>
+                            <div class="panel-body text-center">
+                            <div id="chart_div"></div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="content-panel">
+                            <h4><i class="fa fa-angle-right"></i> Line</h4>
+                            <div class="panel-body text-center">
+                                <canvas id="line" height="300" width="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt">
+                    <div class="col-lg-6">
+                        <div class="content-panel">
+                            <h4><i class="fa fa-angle-right"></i> Radar</h4>
+                            <div class="panel-body text-center">
+                                <canvas id="radar" height="300" width="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="content-panel">
+                            <h4><i class="fa fa-angle-right"></i> Polar Area</h4>
+                            <div class="panel-body text-center">
+                                <canvas id="polarArea" height="300" width="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt">
+                    <div class="col-lg-6">
+                        <div class="content-panel">
+                            <h4><i class="fa fa-angle-right"></i> Bar</h4>
+                            <div class="panel-body text-center">
+                                <canvas id="bar" height="300" width="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="content-panel">
+                            <h4><i class="fa fa-angle-right"></i> Pie</h4>
+                            <div class="panel-body text-center">
+                                <canvas id="pie" height="300" width="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
     </section><!-- /MAIN CONTENT -->
 
     <!--main content end-->
