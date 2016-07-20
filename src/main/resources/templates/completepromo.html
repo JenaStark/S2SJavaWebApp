@@ -327,10 +327,12 @@
                             <form class="form-horizontal style-form" th:object="${promostore}" th:action="@{/promostore}" method="post" enctype="multipart/form-data">
                                 <input type="hidden" th:field="*{id}"/>
                                 <input type="hidden" th:field="*{version}"/>
+                                <input type="hidden" th:field="*{storeID}"/>
+                                <input type="hidden" th:field="*{promoID}"/>
                                 <div class="form-group">
                                     <div class="col-sm-10">
                                         <label class="btn btn-default btn-file fieldImage">
-                                            Select Field Image <input required class = "form-control round-form" type="file" style="display: none;">
+                                            Select Field Image <input required class = "form-control round-form" type="file" name= "file">
                                         </label>
                                     </div>
                                 </div>

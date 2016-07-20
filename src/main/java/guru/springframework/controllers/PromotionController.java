@@ -246,7 +246,7 @@ public class PromotionController {
 
         model.addAttribute("expired", expired);
         model.addAttribute("products", products);
-        return "completePromo";
+        return "completepromo";
     }
 
     @RequestMapping("*/promoform.html")
@@ -259,8 +259,7 @@ public class PromotionController {
 
 
   @RequestMapping(value = "promostore", method = RequestMethod.POST)
-    public String uploadPromoImage(PromotionStore promoStore, @RequestParam("file") MultipartFile file){
-
+    public String uploadPromoImage(PromotionStore promostore, @RequestParam("file") MultipartFile file){
 
       String fileName = null;
       BufferedOutputStream buffStream = null;
@@ -279,16 +278,67 @@ public class PromotionController {
       } else {
       }
 
-      promoStore.setFieldLoc("/tmp/" + fileName);
-      String fieldImage = promoStore.getFieldLoc();
-      String referenceImage = promoService.getPromoById(promoStore.getPromoID()).getFileLoc();
+      promostore.setFieldLoc("/tmp/" + fileName);
+      String pythonPath = "/Users/user/Downloads/new_index.py";
+      String promoPath = "/Users/user/Downloads/1.jpg";
+      String refPath = "/Users/user/Downloads/refdoc.txt";
 
-      //check field against reference and set field status and set status to completed if OK
-      // status --> completed ontime, late, or not completed
-        promoStore.setStatus("Completed");
-      promoStoreService.savePromotionStore(promoStore);
+       String results = "";
+      try {
+          String[] cmd = new String[4];
+          cmd[0] = "python";
+          cmd[1] = pythonPath;
+          cmd[2] = promoPath;
+          cmd[3] = refPath;
+          Process p = Runtime.getRuntime().exec(cmd);
+          System.out.println("python " + pythonPath + " " + promoPath + " " + refPath);
+          BufferedReader in = new BufferedReader(
+                  new InputStreamReader(p.getInputStream()));
+          BufferedReader stdError = new BufferedReader(new
+                  InputStreamReader(p.getErrorStream()));
+          p.waitFor();
+          String line = null;
 
-      return "redirect:/promotion/" + promoStore.getPromoID() + "/store" + promoStore.getStoreID();
+          if(in.readLine() == null) {
+              System.out.println("empty");
+          }
+          while ((line = in.readLine()) != null) {
+            results = results.concat(line);
+              System.out.println(line);
+          }
+          String s = null;
+          while ((s = stdError.readLine()) != null) {
+              System.out.println(s);
+          }
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+          //check field against reference and set field status and set status to completed if OK
+          // status --> completed ontime, late, or not completed
+          //promostore.setStatus(results);
+
+         /* Process process = new ProcessBuilder("python", "/Users/user/Downloads/new_index.py", "/Users/user/Downloads/1.jpg", "/Users/user/Downloads/refdoc.txt").start();
+          InputStream is = process.getInputStream();
+          InputStreamReader isr = new InputStreamReader(is);
+          BufferedReader br = new BufferedReader(isr);
+          String line;
+          BufferedReader stdError = new BufferedReader(new
+                  InputStreamReader(process.getErrorStream()));
+
+          while ((line = br.readLine()) != null) {
+              System.out.println(line);
+          }
+
+          while ((line = stdError.readLine()) != null) {
+              System.out.println(line);
+          }
+      } catch (Exception e) {
+          e.printStackTrace();
+      }*/
+
+      promoStoreService.savePromotionStore(promostore);
+
+      return "redirect:/promotion/" + promostore.getPromoID() + "/store/" + promostore.getStoreID();
 
   }
 
