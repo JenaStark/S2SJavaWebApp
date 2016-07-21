@@ -329,13 +329,20 @@
                                 <input type="hidden" th:field="*{version}"/>
                                 <input type="hidden" th:field="*{storeID}"/>
                                 <input type="hidden" th:field="*{promoID}"/>
+                                <span id="upload-file-info"></span>
                                 <div class="form-group">
+
                                     <div class="col-sm-10">
-                                        <label class="btn btn-default btn-file fieldImage">
-                                            Select Field Image <input required class = "form-control round-form" type="file" name= "file">
+
+                                        <label class="btn btn-default btn-file" for="my-file-selector">
+                                            <input id="my-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                                            Select Field Image
                                         </label>
                                     </div>
+
+
                                 </div>
+
 
                                 <div class="nav">
                                     <button type="submit" id="uploadImage"><i class="fa fa-upload"></i> Upload Image</button>

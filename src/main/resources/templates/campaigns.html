@@ -275,6 +275,7 @@
             <ul class="nav pull-right top-menu">
                 <li><a class="logout" id="add" href="campaign/new"><i class="fa fa-plus-square"></i>      Add</a></li>
             </ul>
+            <br></br>
             <div id="unseen">
     <div th:if="${not #lists.isEmpty(campaigns)}">
         <table id="productTable">
@@ -282,8 +283,9 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>View Promotions</th>
+                <th>View Details</th>
                 <th>Edit</th>
+                <th>Delete</th>
             </tr>
             <tr th:each="campaign : ${campaigns}">
                 <td th:text="${campaign.id}"><a href="/campaign/${campaign.id}">Id</a></td>
@@ -291,6 +293,8 @@
                 <td th:text="${campaign.description}">description</td>
                 <td><a th:href="${ '/campaign/' + campaign.id}">View</a></td>
                 <td><a th:href="${'/campaign/edit/' + campaign.id}">Edit</a></td>
+                <td><a th:href="${'/campaign/delete/' + campaign.id}">Delete</a></td>
+
             </tr>
         </table>
 

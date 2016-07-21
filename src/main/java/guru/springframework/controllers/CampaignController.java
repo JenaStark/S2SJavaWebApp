@@ -81,4 +81,13 @@ public class CampaignController {
         return "redirect:/campaign/" + campaign.getId();
     }
 
+
+    @RequestMapping(value = "campaign/delete/{id}")
+    public String deleteCampaign(@PathVariable("id") Integer id) {
+
+        campaignService.delete(campaignService.getCampaignById(id));
+
+        return "redirect:/campaigns";
+    }
+
 }

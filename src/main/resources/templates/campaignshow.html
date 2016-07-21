@@ -269,6 +269,9 @@
         <section class="wrapper site-min-height">
             <div id ="tablez">
                 <ul class="nav pull-right top-menu">
+                    <li><a class="logout" id="delete" th:href="${'/campaign/delete/' + campaign.id}"><i class="fa fa-times"></i>     Delete</a></li>
+                </ul>
+                <ul class="nav pull-right top-menu">
                     <li><a class="logout" id="add" th:href="${'/campaign/edit/' + campaign.id}"><i class="fa fa-pencil-square-o"></i>      Edit</a></li>
                 </ul>
                 <h2 th:text = "'Campaign #' +' '+ ${campaign.id}"><i class="fa fa-angle-right"></i></h2>
@@ -277,7 +280,7 @@
 
                 <h5 th:text = "'Description:' +' '+ ${campaign.description}"></h5>
 
-
+    <br></br>
                 <div id="unseen">
     <div th:if="${campaign.promoIDs != null and not #lists.isEmpty(campaign.promoIDs)}">
 

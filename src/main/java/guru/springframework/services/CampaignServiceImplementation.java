@@ -29,5 +29,8 @@ public class CampaignServiceImplementation implements CampaignService {
         return campaignRepository.save(campaign);
     }
 
+    @Override
+    public void delete(Campaign campaign) {campaignRepository.delete(campaign);}
+
 
 }

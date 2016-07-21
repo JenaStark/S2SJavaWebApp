@@ -10,4 +10,6 @@ public interface CampaignService {
 
     Campaign saveCampaign(Campaign campaign);
 
+    void delete(Campaign campaign);
+
 }

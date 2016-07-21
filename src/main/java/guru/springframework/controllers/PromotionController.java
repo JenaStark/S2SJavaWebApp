@@ -130,7 +130,7 @@ public class PromotionController {
                     } else if(nowDate.compareTo(d) < 0) {
                         expired = "Not expired";
                     } else {
-                     expired = "Ends today";
+                     expired = "Last day";
                 }
         model.addAttribute("storeStats", storesStats);
         model.addAttribute("expired", expired);
@@ -195,6 +195,18 @@ public class PromotionController {
         } else {
         }
     promotion.setFileLoc("/tmp/" + fileName);
+
+        Date dateNow = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        String nowDate2 = null;
+        Date nowDate = null;
+        try {
+            nowDate2 = sdf.format(dateNow);
+            nowDate = sdf.parse(nowDate2);
+        } catch (ParseException e) {
+        }
+        promotion.setPosted(nowDate);
     promoService.savePromo(promotion);
 
         if(promoService.getPromoById(promotion.getId()).getStoreIDs() != null) {
@@ -228,13 +240,24 @@ public class PromotionController {
         } catch (ParseException e) {
 
         }
+
+        String nowDate2 = null;
+        Date nowDate = null;
+        try {
+            nowDate2 = sdf.format(dateNow);
+            nowDate = sdf.parse(nowDate2);
+        } catch (ParseException e) {
+        }
+
         String expired;
-        if(d != null && dateNow.compareTo(d) > 0) {
-            expired= "Expired or ends today";
+        if(d != null && nowDate.compareTo(d) > 0) {
+            expired= "Expired";
         } else if (d == null){
             expired = "No end date given";
-        } else {
+        } else if(nowDate.compareTo(d) < 0) {
             expired = "Not expired";
+        } else {
+            expired = "Ends today";
         }
 
         List<Product> products = new ArrayList<Product>();

@@ -2,6 +2,7 @@ package guru.springframework.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Entity
 public class Promotion {
@@ -22,6 +23,7 @@ public class Promotion {
     private ArrayList<Integer> productIDs;
     private String fileLoc;
     private String fileName;
+    private Date posted;
 
     public String getDescription() {
         return description;
@@ -104,6 +106,10 @@ public class Promotion {
 
     public String getFileName() { return fileName; }
     public void setFileName(String fileName) { this.fileName = fileName; }
+
+    public Date getPosted() { return posted; }
+    public void setPosted(Date posted) { this.posted = posted; }
+
 
 
 }

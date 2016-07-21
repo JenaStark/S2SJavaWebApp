@@ -508,6 +508,10 @@ ul.sidebar-menu li a.active i {
     color: white;
 }
 
+#formbutton {
+    margin-left: 2%;
+}
+
 a.logo {
     font-size: 20px;
     color: #ffffff;
