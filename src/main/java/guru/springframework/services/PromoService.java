@@ -16,4 +16,8 @@ public interface PromoService {
 
     void delete(Promotion promotion);
 
+    Long count();
+
+    List<Promotion> findTop6ByOrderByPostedDesc();
+
 }

@@ -28,4 +28,7 @@ public class StoreServiceImplementation implements StoreService {
     public Store saveStore(Store store) {
         return storeRepository.save(store);
     }
+
+    @Override
+    public Long count() { return storeRepository.count();}
 }

@@ -206,7 +206,8 @@ public class PromotionController {
             nowDate = sdf.parse(nowDate2);
         } catch (ParseException e) {
         }
-        promotion.setPosted(nowDate);
+        promotion.setPosted(dateNow);
+
     promoService.savePromo(promotion);
 
         if(promoService.getPromoById(promotion.getId()).getStoreIDs() != null) {

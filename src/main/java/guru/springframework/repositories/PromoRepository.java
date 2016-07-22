@@ -11,4 +11,6 @@ public interface PromoRepository extends CrudRepository<Promotion, Integer>{
 
     Integer deleteById(Integer id);
 
+    List<Promotion> findTop6ByOrderByPostedDesc();
+
 }

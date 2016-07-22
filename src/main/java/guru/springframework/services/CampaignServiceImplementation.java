@@ -32,5 +32,8 @@ public class CampaignServiceImplementation implements CampaignService {
     @Override
     public void delete(Campaign campaign) {campaignRepository.delete(campaign);}
 
+    @Override
+    public Long count() {return campaignRepository.count();}
+
 
 }

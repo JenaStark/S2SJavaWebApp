@@ -24,6 +24,7 @@ public class Promotion {
     private String fileLoc;
     private String fileName;
     private Date posted;
+    private String postedString;
 
     public String getDescription() {
         return description;
@@ -109,6 +110,9 @@ public class Promotion {
 
     public Date getPosted() { return posted; }
     public void setPosted(Date posted) { this.posted = posted; }
+
+    public String getPostedString() { return postedString; }
+    public void setPostedString(String postedString) { this.postedString = postedString; }
 
 
 

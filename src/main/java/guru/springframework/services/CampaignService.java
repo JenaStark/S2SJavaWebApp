@@ -12,4 +12,6 @@ public interface CampaignService {
 
     void delete(Campaign campaign);
 
+    Long count();
+
 }

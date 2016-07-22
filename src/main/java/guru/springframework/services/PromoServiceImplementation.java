@@ -35,4 +35,7 @@ public class PromoServiceImplementation implements PromoService {
 
     public void delete(Promotion promotion){promoRepository.delete(promotion);}
 
+    public Long count(){return promoRepository.count();}
+
+    public List<Promotion> findTop6ByOrderByPostedDesc() {return promoRepository.findTop6ByOrderByPostedDesc();}
 }

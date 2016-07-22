@@ -509,7 +509,7 @@ ul.sidebar-menu li a.active i {
 }
 
 #formbutton {
-    margin-left: 2%;
+    margin-left: 3%;
 }
 
 a.logo {
@@ -916,8 +916,18 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 /* LINE ICONS CONFIGURATION */
 
 .mtbox {
-	margin-top: 80px;
+	margin-top: 45px;
 	margin-bottom: 40px;
+    align-content: center;
+    width: 100%;
+
+}
+
+@media(min-width: 500px) {
+    .mtbox {
+        margin-left: 147px;
+
+    }
 }
 
 .box1 {

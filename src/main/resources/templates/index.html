@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -271,38 +271,24 @@
                     <div class="row mtbox">
                         <div class="col-md-2 col-sm-2 col-md-offset-1 box0">
                             <div class="box1">
-                                <span class="li_heart"></span>
-                                <h3>933</h3>
-                            </div>
-                            <p>933 People liked your page the last 24hs. Whoohoo!</p>
-                        </div>
-                        <div class="col-md-2 col-sm-2 box0">
-                            <div class="box1">
-                                <span class="li_cloud"></span>
-                                <h3>+48</h3>
-                            </div>
-                            <p>48 New files were added in your cloud storage.</p>
-                        </div>
-                        <div class="col-md-2 col-sm-2 box0">
-                            <div class="box1">
-                                <span class="li_stack"></span>
-                                <h3>23</h3>
-                            </div>
-                            <p>You have 23 unread messages in your inbox.</p>
-                        </div>
-                        <div class="col-md-2 col-sm-2 box0">
-                            <div class="box1">
                                 <span class="li_news"></span>
-                                <h3>+10</h3>
+                                <h3 th:text="${campaignNum}"></h3>
                             </div>
-                            <p>More than 10 news were added in your reader.</p>
+                            <p th:text="${campaignNum} + ' ' + 'total campaigns!'"></p>
                         </div>
                         <div class="col-md-2 col-sm-2 box0">
                             <div class="box1">
-                                <span class="li_data"></span>
-                                <h3>OK!</h3>
+                                <span class="li_tag"></span>
+                                <h3 th:text="${promoNum}"></h3>
                             </div>
-                            <p>Your server is working perfectly. Relax & enjoy.</p>
+                            <p th:text="${promoNum} + ' ' + 'total promotions!'"></p>
+                        </div>
+                        <div class="col-md-2 col-sm-2 box0">
+                            <div class="box1">
+                                <span class="li_shop"></span>
+                                <h3 th:text="${storeNum}"></h3>
+                            </div>
+                            <p th:text="${storeNum} + ' ' + 'total stores!'"></p>
                         </div>
 
                     </div><!-- /row mt -->
@@ -493,123 +479,26 @@
                 RIGHT SIDEBAR CONTENT
                 *********************************************************************************************************************************************************** -->
 
+
                 <div class="col-lg-3 ds">
                     <!--COMPLETED ACTIONS DONUTS CHART-->
-                    <h3>NOTIFICATIONS</h3>
+                    <h3>Recently Added Promotions</h3>
 
                     <!-- First Action -->
-                    <div class="desc">
+                    <div  th:if="${not #lists.isEmpty(recentPromos)}" th:each="promotion : ${recentPromos}" class="desc">
                         <div class="thumb">
                             <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
                         </div>
                         <div class="details">
-                            <p><muted>2 Minutes Ago</muted><br/>
-                                <a href="#">James Brown</a> subscribed to your newsletter.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Second Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p><muted>3 Hours Ago</muted><br/>
-                                <a href="#">Diana Kennedy</a> purchased a year subscription.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Third Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p><muted>7 Hours Ago</muted><br/>
-                                <a href="#">Brandon Page</a> purchased a year subscription.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Fourth Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p><muted>11 Hours Ago</muted><br/>
-                                <a href="#">Mark Twain</a> commented your post.<br/>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Fifth Action -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                        </div>
-                        <div class="details">
-                            <p><muted>18 Hours Ago</muted><br/>
-                                <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
-                            </p>
+                            <p th:text="${promotion.posted}"><muted></muted><br/> </p>
+                            <a th:text="${promotion.name} + ' '" href="/promotions"> </a> was created.<br/>
                         </div>
                     </div>
 
-                    <!-- USERS ONLINE SECTION -->
-                    <h3>TEAM MEMBERS</h3>
-                    <!-- First Member -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <img class="img-circle" src="img/ui-divya.jpg" width="35px" height="35px" align="">
+                        <div class = "desc"  th:if="${#lists.isEmpty(recentPromos)}">
+                            No recent activity.
                         </div>
-                        <div class="details">
-                            <p><a href="#">DIVYA MANIAN</a><br/>
-                                <muted>Available</muted>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Second Member -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <img class="img-circle" src="img/ui-sherman.jpg" width="35px" height="35px" align="">
-                        </div>
-                        <div class="details">
-                            <p><a href="#">DJ SHERMAN</a><br/>
-                                <muted>I am Busy</muted>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Third Member -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <img class="img-circle" src="img/ui-danro.jpg" width="35px" height="35px" align="">
-                        </div>
-                        <div class="details">
-                            <p><a href="#">DAN ROGERS</a><br/>
-                                <muted>Available</muted>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Fourth Member -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <img class="img-circle" src="img/ui-zac.jpg" width="35px" height="35px" align="">
-                        </div>
-                        <div class="details">
-                            <p><a href="#">Zac Sniders</a><br/>
-                                <muted>Available</muted>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Fifth Member -->
-                    <div class="desc">
-                        <div class="thumb">
-                            <img class="img-circle" src="img/ui-sam.jpg" width="35px" height="35px" align="">
-                        </div>
-                        <div class="details">
-                            <p><a href="#">Marcel Newman</a><br/>
-                                <muted>Available</muted>
-                            </p>
-                        </div>
-                    </div>
+
 
                     <!-- CALENDAR-->
                     <div id="calendar" class="mb">
@@ -624,6 +513,8 @@
                             </div>
                         </div>
                     </div><!-- / calendar -->
+
+
 
                 </div><!-- /col-lg-3 -->
             </div><! --/row -->
@@ -667,7 +558,7 @@
             // (string | mandatory) the heading of the notification
             title: 'Welcome to Bargain Bee!',
             // (string | mandatory) the text inside the notification
-            text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo. Free version for <a href="http://blacktie.co" target="_blank" style="color:#ffd777">BlackTie.co</a>.',
+            text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo.',
             // (string | optional) the image to display on the left
             image: '/img/beelogo2.jpg',
             // (bool | optional) if you want it to fade out on its own or just sit there
@@ -700,11 +591,8 @@
             ajax: {
                 url: "show_data.php?action=1",
                 modal: true
-            },
-            legend: [
-                {type: "text", label: "Special event", badge: "00"},
-                {type: "block", label: "Regular event", }
-            ]
+            }
+
         });
     });
 

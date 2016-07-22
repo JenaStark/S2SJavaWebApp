@@ -9,4 +9,6 @@ public interface StoreService {
     Store getStoreById(Integer id);
 
     Store saveStore(Store store);
+
+    Long count();
 }
