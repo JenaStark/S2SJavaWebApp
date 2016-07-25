@@ -21,14 +21,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class PromotionController {
@@ -39,6 +37,8 @@ public class PromotionController {
     private PromoStoreService promoStoreService;
 
     private final String USER_AGENT = "Mozilla/5.0";
+    private int pPhotoCount = 0;
+    private int sPhotoCount = 0;
 
 
 
@@ -140,24 +140,6 @@ public class PromotionController {
         return "promoshow";
     }
 
-    @RequestMapping(value="promotion/singleSave", method=RequestMethod.POST )
-    public void singleSave(@RequestParam("file") MultipartFile file){
-
-        String fileName = null;
-        if (!file.isEmpty()) {
-            try {
-                fileName = file.getOriginalFilename();
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream buffStream =
-                        new BufferedOutputStream(new FileOutputStream(new File("/tmp/" + fileName)));
-                buffStream.write(bytes);
-                buffStream.close();
-            } catch (Exception e) {
-            }
-        } else {
-        }
-    }
-
     @RequestMapping("promotion/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
         model.addAttribute("promotion", promoService.getPromoById(id));
@@ -180,9 +162,11 @@ public class PromotionController {
 
         String fileName = null;
         BufferedOutputStream buffStream = null;
+        Random random = new Random();
+        int fileNum = random.nextInt(20001) + 10000;
+        fileName = Integer.toString(fileNum) + Integer.toString(pPhotoCount++) + "." + FilenameUtils.getExtension(file.getOriginalFilename());
         if (!file.isEmpty()) {
             try {
-                fileName = file.getOriginalFilename();
                 byte[] bytes = file.getBytes();
                 buffStream =
                         new BufferedOutputStream(new FileOutputStream(new File("/tmp/" + fileName)));
@@ -228,7 +212,7 @@ public class PromotionController {
         return "redirect:/promotion/" + promotion.getId();
     }
     @RequestMapping("promotion/{id}/store/{storeID}")
-    public String completePromo(@PathVariable("id") Integer id, @PathVariable("storeID") Integer storeID, Model model) {
+    public String completePromo(@PathVariable("id") Integer id, @PathVariable("storeID") Integer storeID, Model model, @ModelAttribute("result") String result) {
         model.addAttribute("promostore", promoStoreService.findFirstByPromoIDAndStoreID(id, storeID));
         model.addAttribute("promotion", promoService.getPromoById(id));
         model.addAttribute("store", storeService.getStoreById(storeID));
@@ -261,12 +245,14 @@ public class PromotionController {
             expired = "Ends today";
         }
 
+        model.addAttribute("result", result);
         List<Product> products = new ArrayList<Product>();
         if(promoService.getPromoById(id).getProductIDs() != null) {
             for (Integer idnum : promoService.getPromoById(id).getProductIDs()) {
                 products.add(productService.getProductById(idnum));
             }
         }
+        result = null;
 
         model.addAttribute("expired", expired);
         model.addAttribute("products", products);
@@ -283,13 +269,15 @@ public class PromotionController {
 
 
   @RequestMapping(value = "promostore", method = RequestMethod.POST)
-    public String uploadPromoImage(PromotionStore promostore, @RequestParam("file") MultipartFile file){
+    public String uploadPromoImage(PromotionStore promostore, @RequestParam("file") MultipartFile file, RedirectAttributes ra) {
 
       String fileName = null;
       BufferedOutputStream buffStream = null;
+      Random random = new Random();
+      int fileNum = random.nextInt(20001) + 10000;
+      fileName = Integer.toString(fileNum) + Integer.toString(sPhotoCount++) + "." + FilenameUtils.getExtension(file.getOriginalFilename());
       if (!file.isEmpty()) {
           try {
-              fileName = file.getOriginalFilename();
               byte[] bytes = file.getBytes();
               buffStream =
                       new BufferedOutputStream(new FileOutputStream(new File("/tmp/" + fileName)));
@@ -301,9 +289,8 @@ public class PromotionController {
           }
       } else {
       }
-
       promostore.setFieldLoc("/tmp/" + fileName);
-      String pythonPath = "/Users/user/Downloads/new_index.py";
+      /*String pythonPath = "/Users/user/Downloads/new_index.py";
       String promoPath = "/Users/user/Downloads/1.jpg";
       String refPath = "/Users/user/Downloads/refdoc.txt";
 
@@ -360,6 +347,7 @@ public class PromotionController {
           e.printStackTrace();
       }*/
 
+      ra.addFlashAttribute("result","Success!");
       promoStoreService.savePromotionStore(promostore);
 
       return "redirect:/promotion/" + promostore.getPromoID() + "/store/" + promostore.getStoreID();

@@ -17,7 +17,6 @@ public class Store {
 
     private String email;
 
-
     public Integer getVersion() {
         return version;
     }
