@@ -64,14 +64,15 @@ public class PromotionController {
 
 
     @RequestMapping(value = "/promotions", method = RequestMethod.GET)
-    public String list(Model model){
+    public String list(Model model, @ModelAttribute("result") String result){
         model.addAttribute("promotions", promoService.listAllPromotions());
         System.out.println("Returning promotions:");
+
         return "promotions";
     }
 
     @RequestMapping("promotion/{id}")
-    public String showPromotion(@PathVariable("id") Integer id, Model model){
+    public String showPromotion(@PathVariable("id") Integer id, Model model,  @ModelAttribute("result") String result){
         model.addAttribute("promotion", promoService.getPromoById(id));
         List<Store> stores = new ArrayList<Store>();
         if(promoService.getPromoById(id).getStoreIDs() != null) {
@@ -132,6 +133,7 @@ public class PromotionController {
                     } else {
                      expired = "Last day";
                 }
+        model.addAttribute("result", result);
         model.addAttribute("storeStats", storesStats);
         model.addAttribute("expired", expired);
         model.addAttribute("status", storeStatus);
@@ -289,20 +291,21 @@ public class PromotionController {
           }
       } else {
       }
+
+      Promotion promotion =  promoService.getPromoById(promostore.getPromoID());
       promostore.setFieldLoc("/tmp/" + fileName);
-      /*String pythonPath = "/Users/user/Downloads/new_index.py";
-      String promoPath = "/Users/user/Downloads/1.jpg";
-      String refPath = "/Users/user/Downloads/refdoc.txt";
+      String pythonPath = "/private/tmp/new_index.py";
+      String referencePath = promotion.getFileLoc();
+      String storePath = promostore.getFieldLoc();
 
        String results = "";
       try {
           String[] cmd = new String[4];
           cmd[0] = "python";
           cmd[1] = pythonPath;
-          cmd[2] = promoPath;
-          cmd[3] = refPath;
+          cmd[2] = storePath;
+          cmd[3] = referencePath;
           Process p = Runtime.getRuntime().exec(cmd);
-          System.out.println("python " + pythonPath + " " + promoPath + " " + refPath);
           BufferedReader in = new BufferedReader(
                   new InputStreamReader(p.getInputStream()));
           BufferedReader stdError = new BufferedReader(new
@@ -310,12 +313,8 @@ public class PromotionController {
           p.waitFor();
           String line = null;
 
-          if(in.readLine() == null) {
-              System.out.println("empty");
-          }
           while ((line = in.readLine()) != null) {
             results = results.concat(line);
-              System.out.println(line);
           }
           String s = null;
           while ((s = stdError.readLine()) != null) {
@@ -324,30 +323,50 @@ public class PromotionController {
       } catch (Exception e) {
           e.printStackTrace();
       }
-          //check field against reference and set field status and set status to completed if OK
-          // status --> completed ontime, late, or not completed
-          //promostore.setStatus(results);
+      System.out.println(results);
 
-         /* Process process = new ProcessBuilder("python", "/Users/user/Downloads/new_index.py", "/Users/user/Downloads/1.jpg", "/Users/user/Downloads/refdoc.txt").start();
-          InputStream is = process.getInputStream();
-          InputStreamReader isr = new InputStreamReader(is);
-          BufferedReader br = new BufferedReader(isr);
-          String line;
-          BufferedReader stdError = new BufferedReader(new
-                  InputStreamReader(process.getErrorStream()));
+      Date dateNow = new Date();
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      Date d = null;
+      try {
+          d = sdf.parse(promotion.getEnd());
+      } catch (ParseException e) {
 
-          while ((line = br.readLine()) != null) {
-              System.out.println(line);
-          }
+      }
 
-          while ((line = stdError.readLine()) != null) {
-              System.out.println(line);
-          }
-      } catch (Exception e) {
-          e.printStackTrace();
-      }*/
+      String nowDate2 = null;
+      Date nowDate = null;
+      try {
+          nowDate2 = sdf.format(dateNow);
+          nowDate = sdf.parse(nowDate2);
+      } catch (ParseException e) {
+      }
 
-      ra.addFlashAttribute("result","Success!");
+      String expired;
+      if(d != null && nowDate.compareTo(d) > 0) {
+          expired= "Expired";
+      } else if (d == null){
+          expired = "No end date given";
+      } else if(nowDate.compareTo(d) < 0) {
+          expired = "Not expired";
+      } else {
+          expired = "Ends today";
+      }
+
+      if((results.contains("YES")) && (expired.equals("Not expired"))) {
+          promostore.setStatus("Completed");
+          promostore.setFieldStatus("Matches");
+          ra.addFlashAttribute("result","Success!");
+      } else if ((results.contains("YES")) && (expired.equals("Expired"))) {
+          promostore.setStatus("Completed late");
+          promostore.setFieldStatus("Matches");
+          ra.addFlashAttribute("result","Late");
+      } else {
+          promostore.setStatus("Not completed");
+          promostore.setFieldStatus("Does not Match");
+          ra.addFlashAttribute("result","Error");
+      }
+
       promoStoreService.savePromotionStore(promostore);
 
       return "redirect:/promotion/" + promostore.getPromoID() + "/store/" + promostore.getStoreID();
@@ -358,7 +377,7 @@ public class PromotionController {
     public String data(Model model) {
         model.addAttribute("completed", promoStoreService.findByStatus("Completed").size() + 23);
         model.addAttribute("notCompleted", promoStoreService.findByStatus("Not completed").size() + 5);
-        model.addAttribute("late", promoStoreService.findByStatus("Late").size() + 10);
+        model.addAttribute("late", promoStoreService.findByStatus("Completed late").size() + 10);
         return "data";
     }
 
@@ -376,7 +395,7 @@ public class PromotionController {
     }
 
     @RequestMapping("promotion/send/{id}")
-    public String sendPostRequest(@PathVariable("id") Integer id) throws IOException {
+    public String sendPostRequest(@PathVariable("id") Integer id, RedirectAttributes ra) throws IOException {
 
         Promotion promotion = promoService.getPromoById(id);
 
@@ -424,6 +443,9 @@ public class PromotionController {
 
             System.out.println(result.toString());
         }
+
+        ra.addFlashAttribute("result","Success!");
+
 
         return "redirect:/promotion/" + promotion.getId();
 

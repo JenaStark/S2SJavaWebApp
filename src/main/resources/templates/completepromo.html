@@ -271,9 +271,26 @@
         <section class="wrapper site-min-height">
             <div th:if="${result == 'Success!'}">
             <div class="alert alert-success">
-                <strong>Success!</strong> Indicates a successful or positive action.
+                <strong>Success!</strong> You have submitted a field image and it has been accepted! This promotion should now be complete.
+
             </div>
                 </div>
+
+            <div th:if="${result == 'Late'}">
+            <div class="alert alert-warning">
+                <strong>Notice!</strong> You have submitted a field image and it has been accepted!
+                However, this promotion has already expired so it has been marked late although complete.
+
+            </div>
+            </div>
+
+            <div th:if="${result == 'Error'}">
+            <div class="alert alert-danger">
+                <strong>Error!</strong> You have submitted a field image but it has not been accepted! Please upload a different image
+                and try again! Either the image does not match or an error occured in processing!
+
+            </div>
+            </div>
 
             <div id ="tablez">
 

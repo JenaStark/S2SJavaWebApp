@@ -29,17 +29,6 @@
         <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 
 
-        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
-        <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyA5msht5zKOR_Yf1-lMvDE6bk5O-y8icNo",
-                authDomain: "s2swebapp.firebaseapp.com",
-                databaseURL: "https://s2swebapp.firebaseio.com",
-                storageBucket: "",
-            };
-            firebase.initializeApp(config);
-        </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
@@ -284,7 +273,11 @@
     <section id="main-content">
         <section class="wrapper site-min-height">
 
-
+            <div th:if="${result == 'Success!'}">
+                <div class="alert alert-success">
+                    <strong>Success!</strong> Promotion was sent to all associated stores.
+                </div>
+            </div>
 
             <div id ="tablez">
                 <ul class="nav pull-right top-menu">
