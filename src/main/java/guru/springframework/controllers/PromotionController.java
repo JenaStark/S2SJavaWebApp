@@ -356,10 +356,12 @@ public class PromotionController {
       if((results.contains("YES")) && (expired.equals("Not expired"))) {
           promostore.setStatus("Completed");
           promostore.setFieldStatus("Matches");
+          promostore.setTime(nowDate2.toString());
           ra.addFlashAttribute("result","Success!");
       } else if ((results.contains("YES")) && (expired.equals("Expired"))) {
           promostore.setStatus("Completed late");
           promostore.setFieldStatus("Matches");
+          promostore.setTime(nowDate.toString());
           ra.addFlashAttribute("result","Late");
       } else {
           promostore.setStatus("Not completed");

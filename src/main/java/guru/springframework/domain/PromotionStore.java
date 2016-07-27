@@ -20,6 +20,7 @@ public class PromotionStore {
 
     private String fieldLoc;
     private String fieldStatus;
+    private String time;
 
     public Integer getVersion() {
         return version;
@@ -76,6 +77,16 @@ public class PromotionStore {
     public void setFieldStatus(String fieldStatus) {
         this.fieldStatus = fieldStatus;
     }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+
 
 
 

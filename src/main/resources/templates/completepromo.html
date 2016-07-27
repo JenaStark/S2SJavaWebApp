@@ -211,7 +211,7 @@
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
 
-                <p class="centered"><a href="profile.html"><img src="/img/beelogo2.jpg" class="img-circle" width="120"></a></p>
+                <p class="centered"><a href="/"><img src="/img/beelogo2.jpg" class="img-circle" width="120"></a></p>
                 <h5 class="centered">Hive Inc</h5>
 
                 <li class="mt">
@@ -220,9 +220,6 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-
-
-
 
                 <li class="sub-menu">
                     <a href="javascript:;" >
@@ -306,7 +303,8 @@
 
                 <h5 th:text = "'End Date:' +' '+ ${promotion.end}"></h5>
                 <h5 id = "expired" th:text = "'Expiry Status:' + ' '+ ${expired}"></h5>
-                <h5 th:text = "'Your Status:' + ' ' + ${promostore.status}"></h5>
+                <h5 th:if="${promostore.time != null}" th:text="'Your Status:' + ' ' + ${promostore.status} + ' ' + 'on' + ' ' + ${promostore.time}"></h5>
+                <h5  th:if="${promostore.time == null}" th:text = "'Your Status:' + ' ' + ${promostore.status}"></h5>
 
                 <span id = "divider"> </span>
                     <div id="unseen">
