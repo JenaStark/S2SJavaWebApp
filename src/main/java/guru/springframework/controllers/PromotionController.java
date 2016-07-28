@@ -193,6 +193,7 @@ public class PromotionController {
         } catch (ParseException e) {
         }
         promotion.setPosted(dateNow);
+        promotion.setPostedString(nowDate2);
 
     promoService.savePromo(promotion);
 

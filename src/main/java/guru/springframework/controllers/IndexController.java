@@ -12,6 +12,8 @@ import guru.springframework.domain.Campaign;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +50,63 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(Model model){
+        Date dateNow = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String nowDate = sdf.format(dateNow);
+
+        Date date;
+
+        Calendar cal = Calendar.getInstance();
+
+        cal.add(Calendar.DATE, -6);
+        date = cal.getTime();
+        String stringDate1 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate2 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate3 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate4 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate5 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate6 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate7 = sdf.format(date);
+
+        model.addAttribute("date1", promoService.findByPostedString(stringDate1).size());
+        model.addAttribute("date2", promoService.findByPostedString(stringDate2).size());
+        model.addAttribute("date3", promoService.findByPostedString(stringDate3).size());
+        model.addAttribute("date4", promoService.findByPostedString(stringDate4).size());
+        model.addAttribute("date5", promoService.findByPostedString(stringDate5).size());
+        model.addAttribute("date6", promoService.findByPostedString(stringDate6).size());
+        model.addAttribute("date7", promoService.findByPostedString(stringDate7).size());
+
+        model.addAttribute("date1String", stringDate1);
+        model.addAttribute("date2String", stringDate2);
+        model.addAttribute("date3String", stringDate3);
+        model.addAttribute("date4String", stringDate4);
+        model.addAttribute("date5String", stringDate5);
+        model.addAttribute("date6String", stringDate6);
+        model.addAttribute("date7String", stringDate7);
+
+
         model.addAttribute("campaignNum", campaignService.count());
         model.addAttribute("promoNum", promoService.count());
         model.addAttribute("storeNum", storeService.count());
-        model.addAttribute("recentPromos", promoService.findTop6ByOrderByPostedDesc());
+        model.addAttribute("recentPromos", promoService.findTop3ByOrderByPostedDesc());
 
         return "index";
     }
@@ -61,7 +116,7 @@ public class IndexController {
         model.addAttribute("campaignNum", campaignService.count());
         model.addAttribute("promoNum", promoService.count());
         model.addAttribute("storeNum", storeService.count());
-        model.addAttribute("recentPromos", promoService.findTop6ByOrderByPostedDesc());
+        model.addAttribute("recentPromos", promoService.findTop3ByOrderByPostedDesc());
 
         return "index";
     }
@@ -72,7 +127,7 @@ public class IndexController {
         model.addAttribute("campaignNum", campaignService.count());
         model.addAttribute("promoNum", promoService.count());
         model.addAttribute("storeNum", storeService.count());
-        model.addAttribute("recentPromos", promoService.findTop6ByOrderByPostedDesc());
+        model.addAttribute("recentPromos", promoService.findTop3ByOrderByPostedDesc());
 
         return "index";
     }

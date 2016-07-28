@@ -37,5 +37,8 @@ public class PromoServiceImplementation implements PromoService {
 
     public Long count(){return promoRepository.count();}
 
-    public List<Promotion> findTop6ByOrderByPostedDesc() {return promoRepository.findTop6ByOrderByPostedDesc();}
+    public List<Promotion> findTop3ByOrderByPostedDesc() {return promoRepository.findTop3ByOrderByPostedDesc();}
+
+    public List<Promotion> findByPostedString(String string) {return promoRepository.findByPostedString(string);}
+
 }

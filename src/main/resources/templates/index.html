@@ -30,6 +30,81 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script th:inline="javascript">
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            /*<![CDATA[*/
+
+            var date1 = [[${date1}]];
+            var date2 = [[${date2}]];
+            var date3 = [[${date3}]];
+            var date4 = [[${date4}]];
+            var date5 = [[${date5}]];
+            var date6 = [[${date6}]];
+            var date7 = [[${date7}]];
+
+            var date1String = [[${date1String}]];
+            var date2String = [[${date2String}]];
+            var date3String = [[${date3String}]];
+            var date4String = [[${date4String}]];
+            var date5String = [[${date5String}]];
+            var date6String = [[${date6String}]];
+            var date7String = [[${date7String}]];
+
+
+            /*]]>*/
+
+            var data = google.visualization.arrayToDataTable([
+                ['Date','Promotions Created'],
+                [date1String, date1],
+                [date2String, date2],
+                [date3String, date3],
+                [date4String, date4],
+                [date5String, date5],
+                [date6String, date6],
+                [date7String, date7],
+
+            ]);
+
+            var options = {
+                legend: { position: 'none' },
+                height: 300,
+                colors: ['#FF865C'],
+                chart: {
+                    title: 'Promotions Created in the Last Week',
+                },
+                backgroundColor: { fill:'#F2F2F2' },
+                axes: {
+                    x: {
+                        0: { side: 'bottom', label: ""}
+                    }
+                },
+                fontSize: '18',
+                titleTextStyle: {
+                        fontSize: '18',
+                        fontName: 'Ruda',
+                        bold: true,
+                    },
+                vAxis: {
+                    viewWindowMode:'explicit',
+                    viewWindow:{
+                        min:0,
+                    }
+                },
+
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+    </script>
+
 </head>
 
 <body>
@@ -295,7 +370,7 @@
 
 
                     <div class="row mt">
-                        <!-- SERVER STATUS PANELS -->
+                        <!-- SERVER STATUS PANELS
                         <div class="col-md-4 col-sm-4 mb">
                             <div class="white-panel pn donut-chart">
                                 <div class="white-header">
@@ -320,8 +395,8 @@
                                     ];
                                     var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
                                 </script>
-                            </div><! --/grey-panel -->
-                        </div><!-- /col-md-4-->
+                            </div><! --/grey-panel
+                        </div><!-- /col-md-4
 
 
                         <div class="col-md-4 col-sm-4 mb">
@@ -339,10 +414,10 @@
                                     <img src="img/product.png" width="120">
                                 </div>
                             </div>
-                        </div><!-- /col-md-4 -->
+                        </div><!-- /col-md-4
 
                         <div class="col-md-4 mb">
-                            <!-- WHITE PANEL - TOP USER -->
+                            <!-- WHITE PANEL - TOP USER
                             <div class="white-panel pn">
                                 <div class="white-header">
                                     <h5>TOP USER</h5>
@@ -360,14 +435,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- /col-md-4 -->
+                        </div><!-- /col-md-4
 
 
-                    </div><!-- /row -->
+                    </div><!-- /row
 
 
                     <div class="row">
-                        <!-- TWITTER PANEL -->
+                        <!-- TWITTER PANEL
                         <div class="col-md-4 mb">
                             <div class="darkblue-panel pn">
                                 <div class="darkblue-header">
@@ -396,12 +471,12 @@
                                         <h5>60% Used</h5>
                                     </div>
                                 </footer>
-                            </div><! -- /darkblue panel -->
-                        </div><!-- /col-md-4 -->
+                            </div><! -- /darkblue panel
+                        </div><!-- /col-md-4
 
 
                         <div class="col-md-4 mb">
-                            <!-- INSTAGRAM PANEL -->
+                            <!-- INSTAGRAM PANEL
                             <div class="instagram-panel pn">
                                 <i class="fa fa-instagram fa-4x"></i>
                                 <p>@THISISYOU<br/>
@@ -409,10 +484,10 @@
                                 </p>
                                 <p><i class="fa fa-comment"></i> 18 | <i class="fa fa-heart"></i> 49</p>
                             </div>
-                        </div><!-- /col-md-4 -->
+                        </div><!-- /col-md-4
 
                         <div class="col-md-4 col-sm-4 mb">
-                            <!-- REVENUE PANEL -->
+                            <!-- REVENUE PANEL
                             <div class="darkblue-panel pn">
                                 <div class="darkblue-header">
                                     <h5>REVENUE</h5>
@@ -427,47 +502,13 @@
                     </div><!-- /row -->
 
                     <div class="row mt">
+
                         <!--CUSTOM CHART START -->
-                        <div class="border-head">
-                            <h3>VISITS</h3>
-                        </div>
+
                         <div class="custom-bar-chart">
-                            <ul class="y-axis">
-                                <li><span>10.000</span></li>
-                                <li><span>8.000</span></li>
-                                <li><span>6.000</span></li>
-                                <li><span>4.000</span></li>
-                                <li><span>2.000</span></li>
-                                <li><span>0</span></li>
-                            </ul>
-                            <div class="bar">
-                                <div class="title">JAN</div>
-                                <div class="value tooltips" data-original-title="8.500" data-toggle="tooltip" data-placement="top">85%</div>
-                            </div>
-                            <div class="bar ">
-                                <div class="title">FEB</div>
-                                <div class="value tooltips" data-original-title="5.000" data-toggle="tooltip" data-placement="top">50%</div>
-                            </div>
-                            <div class="bar ">
-                                <div class="title">MAR</div>
-                                <div class="value tooltips" data-original-title="6.000" data-toggle="tooltip" data-placement="top">60%</div>
-                            </div>
-                            <div class="bar ">
-                                <div class="title">APR</div>
-                                <div class="value tooltips" data-original-title="4.500" data-toggle="tooltip" data-placement="top">45%</div>
-                            </div>
-                            <div class="bar">
-                                <div class="title">MAY</div>
-                                <div class="value tooltips" data-original-title="3.200" data-toggle="tooltip" data-placement="top">32%</div>
-                            </div>
-                            <div class="bar ">
-                                <div class="title">JUN</div>
-                                <div class="value tooltips" data-original-title="6.200" data-toggle="tooltip" data-placement="top">62%</div>
-                            </div>
-                            <div class="bar">
-                                <div class="title">JUL</div>
-                                <div class="value tooltips" data-original-title="7.500" data-toggle="tooltip" data-placement="top">75%</div>
-                            </div>
+                            <div id="chart_div"></div>
+
+
                         </div>
                         <!--custom chart end-->
                     </div><!-- /row -->

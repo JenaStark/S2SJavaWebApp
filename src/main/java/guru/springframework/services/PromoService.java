@@ -18,6 +18,8 @@ public interface PromoService {
 
     Long count();
 
-    List<Promotion> findTop6ByOrderByPostedDesc();
+    List<Promotion> findTop3ByOrderByPostedDesc();
+
+    List<Promotion> findByPostedString(String string);
 
 }
