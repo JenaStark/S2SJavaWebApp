@@ -34,17 +34,80 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script th:inline="javascript">
-
-        // Load the Visualization API and the corechart package.
-        google.charts.load('current', {'packages':['corechart']});
-
-        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.load('current', {'packages':['bar', 'corechart']});
         google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChart2);
+        google.charts.setOnLoadCallback(drawChart3);
 
-        // Callback that creates and populates a data table,
-        // instantiates the pie chart, passes in the data and
-        // draws it.
+
+
         function drawChart() {
+
+            /*<![CDATA[*/
+
+            var date1p = [[${date1p}]];
+            var date2p = [[${date2p}]];
+            var date3p = [[${date3p}]];
+            var date4p = [[${date4p}]];
+            var date5p = [[${date5p}]];
+            var date6p = [[${date6p}]];
+            var date7p = [[${date7p}]];
+
+            var date1String = [[${date1String}]];
+            var date2String = [[${date2String}]];
+            var date3String = [[${date3String}]];
+            var date4String = [[${date4String}]];
+            var date5String = [[${date5String}]];
+            var date6String = [[${date6String}]];
+            var date7String = [[${date7String}]];
+
+
+            /*]]>*/
+
+            var data = google.visualization.arrayToDataTable([
+                ['Date','Promotions Created'],
+                [date1String, date1p],
+                [date2String, date2p],
+                [date3String, date3p],
+                [date4String, date4p],
+                [date5String, date5p],
+                [date6String, date6p],
+                [date7String, date7p],
+
+            ]);
+
+            var options = {
+                legend: { position: 'none' },
+                height: 300,
+                width: 500,
+                colors: ['#FF865C'],
+
+                backgroundColor: { fill:'#F2F2F2' },
+                axes: {
+                    x: {
+                        0: { side: 'bottom', label: ""}
+                    }
+                },
+                fontSize: '18',
+                titleTextStyle: {
+                    fontSize: '18',
+                    fontName: 'Ruda',
+                    bold: true,
+                },
+                vAxis: {
+                    viewWindowMode:'explicit',
+                    viewWindow:{
+                        min:0,
+                    }
+                },
+
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('promos7days'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+        function drawChart2() {
 
             /*<![CDATA[*/
 
@@ -78,6 +141,74 @@
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }
+
+        function drawChart3() {
+
+            /*<![CDATA[*/
+
+            var date1 = [[${date1ps}]];
+            var date2 = [[${date2ps}]];
+            var date3 = [[${date3ps}]];
+            var date4 = [[${date4ps}]];
+            var date5 = [[${date5ps}]];
+            var date6 = [[${date6ps}]];
+            var date7 = [[${date7ps}]];
+
+            var date1String = [[${date1String}]];
+            var date2String = [[${date2String}]];
+            var date3String = [[${date3String}]];
+            var date4String = [[${date4String}]];
+            var date5String = [[${date5String}]];
+            var date6String = [[${date6String}]];
+            var date7String = [[${date7String}]];
+
+
+            /*]]>*/
+
+            var data = google.visualization.arrayToDataTable([
+                ['Date','Promotions Created'],
+                [date1String, date1],
+                [date2String, date2],
+                [date3String, date3],
+                [date4String, date4],
+                [date5String, date5],
+                [date6String, date6],
+                [date7String, date7],
+
+            ]);
+
+            var options = {
+                legend: { position: 'none' },
+                height: 300,
+                width: 500,
+                colors: ['#FF865C'],
+
+                backgroundColor: { fill:'#F2F2F2' },
+                axes: {
+                    x: {
+                        0: { side: 'bottom', label: ""}
+                    }
+                },
+                fontSize: '18',
+                titleTextStyle: {
+                    fontSize: '18',
+                    fontName: 'Ruda',
+                    bold: true,
+                },
+                vAxis: {
+                    viewWindowMode:'explicit',
+                    viewWindow:{
+                        min:0,
+                    }
+                },
+
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('completed7days'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+
     </script>
 
 
@@ -325,17 +456,17 @@
                 <div class="row mt">
                     <div class="col-lg-6">
                         <div class="content-panel">
-                            <h4><i class="fa fa-angle-right"></i> Total Status Distribution</h4>
+                            <h4><i class="fa fa-angle-right"></i> Promotions Created in the Past 7 days</h4>
                             <div class="panel-body text-center">
-                            <div id="chart_div"></div>
+                            <div id="promos7days"></div>
                         </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="content-panel">
-                            <h4><i class="fa fa-angle-right"></i> Line</h4>
+                            <h4><i class="fa fa-angle-right"></i> Promotions Completed in the Past 7 days</h4>
                             <div class="panel-body text-center">
-                                <canvas id="line" height="300" width="400"></canvas>
+                                <div id="completed7days"></div>
                             </div>
                         </div>
                     </div>
@@ -343,9 +474,9 @@
                 <div class="row mt">
                     <div class="col-lg-6">
                         <div class="content-panel">
-                            <h4><i class="fa fa-angle-right"></i> Radar</h4>
+                            <h4><i class="fa fa-angle-right"></i> Total Status Distribution</h4>
                             <div class="panel-body text-center">
-                                <canvas id="radar" height="300" width="400"></canvas>
+                                <div id="chart_div"></div>
                             </div>
                         </div>
                     </div>

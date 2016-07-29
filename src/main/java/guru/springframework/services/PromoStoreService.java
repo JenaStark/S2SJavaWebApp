@@ -20,6 +20,8 @@ public interface PromoStoreService {
 
     List<PromotionStore> findByStatus(String status);
 
+    List<PromotionStore> findByTime(String time);
+
 
 
 }

@@ -35,7 +35,7 @@ public class CampaignController {
     @RequestMapping(value = "/campaigns", method = RequestMethod.GET)
     public String list(Model model){
         model.addAttribute("campaigns", campaignService.listAllCampaigns());
-        System.out.println("Returning campaigns:");
+        //System.out.println("Returning campaigns:");
         return "campaigns";
     }
 

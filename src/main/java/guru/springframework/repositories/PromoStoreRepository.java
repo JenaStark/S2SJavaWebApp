@@ -16,4 +16,6 @@ public interface PromoStoreRepository extends CrudRepository<PromotionStore, Int
 
     List<PromotionStore> findByStatus(String status);
 
+    List<PromotionStore> findByTime(String time);
+
 }

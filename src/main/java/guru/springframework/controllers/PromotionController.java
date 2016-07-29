@@ -40,8 +40,6 @@ public class PromotionController {
     private int pPhotoCount = 0;
     private int sPhotoCount = 0;
 
-
-
     @Autowired
     public void setPromoService(PromoService promoService) {
         this.promoService = promoService;
@@ -62,25 +60,29 @@ public class PromotionController {
         this.promoStoreService = promoStoreService;
     }
 
-
+    //Return all promotions
     @RequestMapping(value = "/promotions", method = RequestMethod.GET)
     public String list(Model model, @ModelAttribute("result") String result){
         model.addAttribute("promotions", promoService.listAllPromotions());
-        System.out.println("Returning promotions:");
+        //System.out.println("Returning promotions:");
 
         return "promotions";
     }
 
+    //Return one promotion
     @RequestMapping("promotion/{id}")
     public String showPromotion(@PathVariable("id") Integer id, Model model,  @ModelAttribute("result") String result){
         model.addAttribute("promotion", promoService.getPromoById(id));
         List<Store> stores = new ArrayList<Store>();
-        if(promoService.getPromoById(id).getStoreIDs() != null) {
+
+        //Get associated stores
+        if (promoService.getPromoById(id).getStoreIDs() != null) {
             for (Integer idnum : promoService.getPromoById(id).getStoreIDs()) {
                 stores.add(storeService.getStoreById(idnum));
             }
         }
 
+        //Get associated products
         List<Product> products = new ArrayList<Product>();
         if(promoService.getPromoById(id).getProductIDs() != null) {
             for (Integer idnum : promoService.getPromoById(id).getProductIDs()) {
@@ -88,6 +90,8 @@ public class PromotionController {
             }
         }
 
+        //If stores don't have a status then set to Not completed otherwise save status'
+        // from promostore in order to display
         List<String> storeStatus = new ArrayList<String>();
             for (Store store: stores) {
                 PromotionStore promoStore = new PromotionStore();
@@ -100,20 +104,23 @@ public class PromotionController {
                 }
                 storeStatus.add(status);
             }
+
+        //Associate a status with a store to display easier--> relate store to promostore object
         HashMap<Store, String> storesStats = new HashMap<>();
         int count = 0;
         for (Store store : stores) {
             storesStats.put(store, storeStatus.get(count));
             count++;
         }
-        Date dateNow = new Date();
-               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date d = null;
-                try {
-                        d = sdf.parse(promoService.getPromoById(id).getEnd());
-                    } catch (ParseException e) {
 
-                           }
+        //Check to see if promotion has expired or display status
+        Date dateNow = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = null;
+        try {
+            d = sdf.parse(promoService.getPromoById(id).getEnd());
+        } catch (ParseException e) {
+        }
 
         String nowDate2 = null;
         Date nowDate = null;
@@ -123,16 +130,17 @@ public class PromotionController {
         } catch (ParseException e) {
         }
 
-                String expired;
-                if(d != null && nowDate.compareTo(d) > 0) {
-                        expired= "Expired";
-                    } else if (d == null){
-                        expired = "No end date given";
-                    } else if(nowDate.compareTo(d) < 0) {
-                        expired = "Not expired";
-                    } else {
-                     expired = "Last day";
-                }
+        String expired;
+        if(d != null && nowDate.compareTo(d) > 0) {
+            expired= "Expired";
+        } else if (d == null){
+            expired = "No end date given";
+        } else if(nowDate.compareTo(d) < 0) {
+            expired = "Not expired";
+        } else {
+            expired = "Last day";
+        }
+
         model.addAttribute("result", result);
         model.addAttribute("storeStats", storesStats);
         model.addAttribute("expired", expired);
@@ -142,26 +150,30 @@ public class PromotionController {
         return "promoshow";
     }
 
+    //Edit a specific promotion
     @RequestMapping("promotion/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
         model.addAttribute("promotion", promoService.getPromoById(id));
         model.addAttribute("products", productService.listAllProducts());
         model.addAttribute("stores", storeService.listAllStores());
-        return "blank";
+        return "promoform";
     }
 
+    //Create a new promotion (form-view)
     @RequestMapping("promotion/new")
     public String newPromotion(Model model){
         model.addAttribute("promotion", new Promotion());
         model.addAttribute("products", productService.listAllProducts());
         model.addAttribute("stores", storeService.listAllStores());
 
-        return "blank";
+        return "promoform";
     }
 
+    //Add a new promotion (POST)
     @RequestMapping(value = "promotion", method = RequestMethod.POST)
     public String savePromotion(Promotion promotion, @RequestParam("file") MultipartFile file){
 
+        //Save associated file --> give it a random name, save, and add to promotion
         String fileName = null;
         BufferedOutputStream buffStream = null;
         Random random = new Random();
@@ -180,6 +192,7 @@ public class PromotionController {
             }
         } else {
         }
+
     promotion.setFileLoc("/tmp/" + fileName);
 
         Date dateNow = new Date();
@@ -197,7 +210,8 @@ public class PromotionController {
 
     promoService.savePromo(promotion);
 
-        if(promoService.getPromoById(promotion.getId()).getStoreIDs() != null) {
+        //Create promostore objects if they don't exist already
+        if (promoService.getPromoById(promotion.getId()).getStoreIDs() != null) {
             for (Integer idnum : promoService.getPromoById(promotion.getId()).getStoreIDs()) {
                 PromotionStore promoStore = new PromotionStore();
 
@@ -206,20 +220,21 @@ public class PromotionController {
                     promoStore.setStoreID(idnum);
                     promoStore.setStatus("Not completed");
                     promoStoreService.savePromotionStore(promoStore);
-
                 }
-
             }
         }
 
         return "redirect:/promotion/" + promotion.getId();
     }
+
+    //Page available for a specific store to complete a promotion
     @RequestMapping("promotion/{id}/store/{storeID}")
     public String completePromo(@PathVariable("id") Integer id, @PathVariable("storeID") Integer storeID, Model model, @ModelAttribute("result") String result) {
         model.addAttribute("promostore", promoStoreService.findFirstByPromoIDAndStoreID(id, storeID));
         model.addAttribute("promotion", promoService.getPromoById(id));
         model.addAttribute("store", storeService.getStoreById(storeID));
 
+        //Check to see if the promotion has expired
         Date dateNow = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d = null;
@@ -248,6 +263,7 @@ public class PromotionController {
             expired = "Ends today";
         }
 
+        //Add related products
         model.addAttribute("result", result);
         List<Product> products = new ArrayList<Product>();
         if(promoService.getPromoById(id).getProductIDs() != null) {
@@ -267,13 +283,14 @@ public class PromotionController {
         model.addAttribute("promotion", new Promotion());
         model.addAttribute("products", productService.listAllProducts());
         model.addAttribute("stores", storeService.listAllStores());
-        return "blank";
+        return "promoform";
     }
 
-
+    //Add a new promostore/Update the old one to complete a promotion
   @RequestMapping(value = "promostore", method = RequestMethod.POST)
     public String uploadPromoImage(PromotionStore promostore, @RequestParam("file") MultipartFile file, RedirectAttributes ra) {
 
+      //Save a field image, rename it, and add it to a promostore
       String fileName = null;
       BufferedOutputStream buffStream = null;
       Random random = new Random();
@@ -293,6 +310,7 @@ public class PromotionController {
       } else {
       }
 
+      //Call image recognition code
       Promotion promotion =  promoService.getPromoById(promostore.getPromoID());
       promostore.setFieldLoc("/tmp/" + fileName);
       String pythonPath = "/private/tmp/new_index.py";
@@ -319,13 +337,14 @@ public class PromotionController {
           }
           String s = null;
           while ((s = stdError.readLine()) != null) {
-              System.out.println(s);
+              //System.out.println(s);
           }
       } catch (Exception e) {
           e.printStackTrace();
       }
-      System.out.println(results);
+      //System.out.println(results);
 
+      //Check to see if promotion has expired
       Date dateNow = new Date();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
       Date d = null;
@@ -354,15 +373,16 @@ public class PromotionController {
           expired = "Ends today";
       }
 
+      //Return result and add flash attribute to show user
       if((results.contains("YES")) && (expired.equals("Not expired"))) {
           promostore.setStatus("Completed");
           promostore.setFieldStatus("Matches");
-          promostore.setTime(nowDate2.toString());
+          promostore.setTime(nowDate2);
           ra.addFlashAttribute("result","Success!");
       } else if ((results.contains("YES")) && (expired.equals("Expired"))) {
           promostore.setStatus("Completed late");
           promostore.setFieldStatus("Matches");
-          promostore.setTime(nowDate.toString());
+          promostore.setTime(nowDate2);
           ra.addFlashAttribute("result","Late");
       } else {
           promostore.setStatus("Not completed");
@@ -376,8 +396,73 @@ public class PromotionController {
 
   }
 
+    //Data page
     @RequestMapping("/data")
     public String data(Model model) {
+
+        //Return promotions created by day in the past 7 days
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date;
+
+        Calendar cal = Calendar.getInstance();
+
+        cal.add(Calendar.DATE, -6);
+        date = cal.getTime();
+        String stringDate1 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate2 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate3 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate4 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate5 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate6 = sdf.format(date);
+
+        cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        String stringDate7 = sdf.format(date);
+
+        //Find # of promotions created each day
+        model.addAttribute("date1p", promoService.findByPostedString(stringDate1).size());
+        model.addAttribute("date2p", promoService.findByPostedString(stringDate2).size());
+        model.addAttribute("date3p", promoService.findByPostedString(stringDate3).size());
+        model.addAttribute("date4p", promoService.findByPostedString(stringDate4).size());
+        model.addAttribute("date5p", promoService.findByPostedString(stringDate5).size());
+        model.addAttribute("date6p", promoService.findByPostedString(stringDate6).size());
+        model.addAttribute("date7p", promoService.findByPostedString(stringDate7).size());
+
+        model.addAttribute("date1String", stringDate1);
+        model.addAttribute("date2String", stringDate2);
+        model.addAttribute("date3String", stringDate3);
+        model.addAttribute("date4String", stringDate4);
+        model.addAttribute("date5String", stringDate5);
+        model.addAttribute("date6String", stringDate6);
+        model.addAttribute("date7String", stringDate7);
+
+        //Find # of promotions completed each day (using promostores)
+        model.addAttribute("date1ps", promoStoreService.findByTime(stringDate1).size());
+        model.addAttribute("date2ps", promoStoreService.findByTime(stringDate2).size());
+        model.addAttribute("date3ps", promoStoreService.findByTime(stringDate3).size());
+        model.addAttribute("date4ps", promoStoreService.findByTime(stringDate4).size());
+        model.addAttribute("date5ps", promoStoreService.findByTime(stringDate5).size());
+        model.addAttribute("date6ps", promoStoreService.findByTime(stringDate6).size());
+        model.addAttribute("date7ps", promoStoreService.findByTime(stringDate7).size());
+
+
+        //Get data for all promostores and their status
         model.addAttribute("completed", promoStoreService.findByStatus("Completed").size() + 23);
         model.addAttribute("notCompleted", promoStoreService.findByStatus("Not completed").size() + 5);
         model.addAttribute("late", promoStoreService.findByStatus("Completed late").size() + 10);
@@ -385,6 +470,7 @@ public class PromotionController {
     }
 
 
+    //Delete a promotion and its promostores
     @RequestMapping(value = "promotion/delete/{id}")
     public String deletePromo(@PathVariable("id") Integer id) {
         if(promoService.getPromoById(id).getStoreIDs() != null) {
@@ -397,6 +483,7 @@ public class PromotionController {
         return "redirect:/promotions";
     }
 
+    //Send a promotion to all stores its associated with
     @RequestMapping("promotion/send/{id}")
     public String sendPostRequest(@PathVariable("id") Integer id, RedirectAttributes ra) throws IOException {
 
@@ -432,19 +519,20 @@ public class PromotionController {
             post.setEntity(new UrlEncodedFormEntity(urlParameters));
 
             org.apache.http.HttpResponse response = client.execute(post);
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + post.getEntity());
-            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+            //System.out.println("\nSending 'POST' request to URL : " + url);
+            //System.out.println("Post parameters : " + post.getEntity());
+            //System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
              BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
             StringBuffer result = new StringBuffer();
             String line = "";
+
             while ((line = rd.readLine()) != null) {
                 result.append(line);
             }
 
-            System.out.println(result.toString());
+            //System.out.println(result.toString());
         }
 
         ra.addFlashAttribute("result","Success!");
