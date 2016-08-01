@@ -41,5 +41,7 @@ public class PromotionStoreServiceImplementation implements PromoStoreService {
 
     public List<PromotionStore> findByTime(String time){return promoStoreRepository.findByTime(time);}
 
+    public Long countByStoreIDAndStatus(Integer storeID, String status){return promoStoreRepository.countByStoreIDAndStatus(storeID, status);}
+
     public PromotionStore findFirstByPromoIDAndStoreID(Integer promoID, Integer storeID) {return promoStoreRepository.findFirstByPromoIDAndStoreID(promoID, storeID); }
 }

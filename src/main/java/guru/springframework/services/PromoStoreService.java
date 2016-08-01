@@ -22,6 +22,9 @@ public interface PromoStoreService {
 
     List<PromotionStore> findByTime(String time);
 
+    Long countByStoreIDAndStatus(Integer storeID, String status);
+
+
 
 
 }

@@ -71,7 +71,7 @@ public class PromotionController {
 
     //Return one promotion
     @RequestMapping("promotion/{id}")
-    public String showPromotion(@PathVariable("id") Integer id, Model model,  @ModelAttribute("result") String result){
+    public String showPromotion(@PathVariable("id") Integer id, Model model, @ModelAttribute("result") String result){
         model.addAttribute("promotion", promoService.getPromoById(id));
         List<Store> stores = new ArrayList<Store>();
 
@@ -396,6 +396,12 @@ public class PromotionController {
 
   }
 
+    @RequestMapping("/showStoreData")
+    public String showStoreData(@RequestParam(value="storeID") Integer storeID) {
+        System.out.println("hi");
+        return "redirect:/data";
+    }
+
     //Data page
     @RequestMapping("/data")
     public String data(Model model) {
@@ -461,6 +467,13 @@ public class PromotionController {
         model.addAttribute("date6ps", promoStoreService.findByTime(stringDate6).size());
         model.addAttribute("date7ps", promoStoreService.findByTime(stringDate7).size());
 
+
+        //All stores
+        model.addAttribute("stores", storeService.listAllStores());
+
+
+        //Store specific data
+        model.addAttribute("storeC", promoStoreService.countByStoreIDAndStatus(1, "Completed"));
 
         //Get data for all promostores and their status
         model.addAttribute("completed", promoStoreService.findByStatus("Completed").size() + 23);
