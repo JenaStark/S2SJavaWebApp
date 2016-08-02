@@ -482,7 +482,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="content-panel">
-                            <h4><i class="fa fa-angle-right"></i> Store Specific Promotion Status</h4>
+                            <h4><i class="fa fa-angle-right"></i> Specific Store Status Distribution</h4>
                             <div class="panel-body text-center">
                                 <div id="storeDist">
                                     <form class="form-horizontal style-form" th:action="@{/showStoreData}" method="post" enctype="multipart/form-data" action="/showStoreData">
@@ -497,7 +497,7 @@
                                                             th:text="${dropDownItem.storeNumber}  + ')  ' +  ${dropDownItem.name}"></option>
                                                 </select>
                                             </div>
-                                        </div>
+
                                         <div th:if="${stores == null}">
                                             <div>"No stores were found, please create some first"</div>
                                         </div>
@@ -506,7 +506,7 @@
 
 
                                     <div class="nav">
-                                        <button type="submit" id="uploadImage"><i class="fa fa-upload"></i>Submit</button>
+                                        <button type="submit" id="uploadImage">Submit</button>
                                     </div>
                                 </form></div>
                             </div>
@@ -516,20 +516,35 @@
                 <div class="row mt">
                     <div class="col-lg-6">
                         <div class="content-panel">
-                            <h4><i class="fa fa-angle-right"></i> Bar</h4>
+                            <h4><i class="fa fa-angle-right"></i> Specific Promotion Status Distribution</h4>
                             <div class="panel-body text-center">
-                                <canvas id="bar" height="300" width="400"></canvas>
-                            </div>
+                                <div id="storeDist">
+                                    <form class="form-horizontal style-form" th:action="@{/showStoreData}" method="post" enctype="multipart/form-data" action="/showStoreData">
+
+                                        <div class="form-group" th:if="${promotions != null}">
+                                            <label class="col-sm-2 control-label">Select a promotion:</label>
+                                            <div class="col-sm-10">
+                                                <select>
+                                                    <option th:each="dropDownItem : ${promotions}"
+                                                            th:value="${dropDownItem.id}"
+                                                            value="storeID"
+                                                            th:text="${dropDownItem.id}  + ')  ' +  ${dropDownItem.name}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div th:if="${stores == null}">
+                                            <div>"No promotions were found, please create some first"</div>
+                                        </div>
+
+                                <div class="nav">
+                                    <button type="submit" id="uploadImage">Submit</button>
+                                </div>
+                                </form></div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="content-panel">
-                            <h4><i class="fa fa-angle-right"></i> Pie</h4>
-                            <div class="panel-body text-center">
-                                <canvas id="pie" height="300" width="400"></canvas>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
+
                 </div>
             </div>
             <!-- page end-->

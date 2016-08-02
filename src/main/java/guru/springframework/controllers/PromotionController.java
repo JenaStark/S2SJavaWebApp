@@ -397,7 +397,8 @@ public class PromotionController {
   }
 
     @RequestMapping("/showStoreData")
-    public String showStoreData(@RequestParam(value="storeID") Integer storeID) {
+    public String showStoreData(RedirectAttributes ra, @RequestParam("storeID") Integer storeID) {
+        ra.addFlashAttribute("storeID", storeID);
         System.out.println("hi");
         return "redirect:/data";
     }
@@ -470,15 +471,17 @@ public class PromotionController {
 
         //All stores
         model.addAttribute("stores", storeService.listAllStores());
+        model.addAttribute("promotions", promoService.listAllPromotions());
 
 
         //Store specific data
-        model.addAttribute("storeC", promoStoreService.countByStoreIDAndStatus(1, "Completed"));
+        model.addAttribute("storeN", promoStoreService.countByStoreIDAndStatus(1, "Not completed"));
+
 
         //Get data for all promostores and their status
-        model.addAttribute("completed", promoStoreService.findByStatus("Completed").size() + 23);
-        model.addAttribute("notCompleted", promoStoreService.findByStatus("Not completed").size() + 5);
-        model.addAttribute("late", promoStoreService.findByStatus("Completed late").size() + 10);
+        model.addAttribute("completed", promoStoreService.findByStatus("Completed").size());
+        model.addAttribute("notCompleted", promoStoreService.findByStatus("Not completed").size());
+        model.addAttribute("late", promoStoreService.findByStatus("Completed late").size());
         return "data";
     }
 
